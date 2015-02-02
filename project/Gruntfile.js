@@ -21,9 +21,13 @@ module.exports = function(grunt) {
 		        separator: ';',
 		    },  
 
+		    dev : {
+		    	src: ['./app/assets/javascript/frontend.js'],
+		    	dest: './public/js/frontend.js',
+		    },
+
 		    dist: {
-		        src: [
-		            './bower_components/jquery/dist/jquery.js',
+		        src: [		            		            
 		            './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
 		            './app/assets/javascript/frontend.js'
 		        ],
@@ -48,6 +52,26 @@ module.exports = function(grunt) {
 			        cwd: './bower_components/bootstrap-sass-official/assets/images/',
 			        src: ['**'],
 			        dest: './public/images/'
+			    }, {
+			        expand: true,
+			        cwd: './bower_components/flot/',
+			        src: ['jquery.flot.js'],
+			        dest: './public/js/jquery'
+			    }, {
+			        expand: true,
+			        cwd: './bower_components/jquery/dist/',
+			        src: ['jquery.min.js'],
+			        dest: './public/js/jquery'
+			    }, {
+			        expand: true,
+			        cwd: './bower_components/dropzone/downloads/',
+			        src: ['dropzone.min.js'],
+			        dest: './public/js/'
+			    }, {
+			    	expand: true,
+			        cwd: './bower_components/dropzone/downloads/css/',
+			        src: ['dropzone.css'],
+			        dest: './public/css/'
 			    }]
         	}
         },

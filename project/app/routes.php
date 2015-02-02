@@ -11,7 +11,42 @@
 |
 */
 
-Route::get('/', function()
-{
+
+Route::get('/', function() {
 	return View::make('hello');
 });
+
+
+Route::group(array('prefix' => 'listing'), function() {
+	Route::get('/', array('uses' => 'ListingController@index'));
+});
+
+
+Route::group(array('prefix' => 'account'), function() {
+	Route::get('/create', array('as' => 'account.create', 'uses' => 'AccountController@create'));
+	Route::get('/login', array('uses' => 'AccountController@login'));
+	Route::get('/dashboard', array('as' => 'account.dashboard', 'uses' => 'AccountController@index'));
+});
+
+
+Route::group(array('prefix' => 'advert'), function() {
+	Route::get('/create.html', array('uses' => 'AdvertController@create'));
+});
+
+// 	// main page for the admin section (app/views/admin/dashboard.blade.php)
+//     Route::get('/listing', function() {
+//     	die('Hello 1 2 3 ');
+//         return View::make('admin.dashboard');
+//     });
+// });
+
+// Route::controller('listing', 'ListingController');
+
+// Handle the listing routes here
+// Route::get('listing', array('before' => 'old', 'uses' => 'ListingController@index'));
+
+// Route::post('postLogin',array('before' => 'csrf','uses'=>AuthController@postLogin) );
+
+
+
+

@@ -5,3 +5,75 @@
 
 // Import font awesome
 @import "../../../bower_components/fontawesome/scss/font-awesome";
+
+@font-face {
+	font-family: "Pacifico";
+    src: url("../fonts/Pacifico.ttf?v=1.4.0");
+}
+
+div {
+	outline: 0px !important;
+	-webkit-appearance: none;
+}
+
+a {
+	color: #333333;
+
+	&.link-info {
+		color: #65A020;
+	}
+
+	&.underline {
+		text-decoration: underline;
+	}
+
+	&:hover, &:focus {
+		color: #333333;
+  		text-decoration: underline;	
+	}
+
+}
+
+a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-align: left;
+	font-family: 'Varela Round', sans-serif;
+	font-weight: 400;
+	color: #000;
+}
+
+h1 {
+	font-size: 24px;
+	line-height: 20px;
+	margin-top: 10px;
+}
+
+h2 {
+	font-size: 20px;
+	line-height: 18px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.container {
+  max-width: 997px !important;
+}
+
+.btn {
+	cursor: pointer;
+	padding: 10px 18px;
+}
+
+
+.btn-default {
+	background-image: -webkit-linear-gradient(top, #e6e6e6 0%, #cccccc 100%);
+	background-image: linear-gradient(to bottom, #e6e6e6 0%, #cccccc 100%);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe6e6e6', endColorstr='#ffcccccc', GradientType=0);
+	border-color: #c7c7c7;
+}

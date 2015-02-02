@@ -1,15 +1,614 @@
 @extends('layouts.master')
 
-@section('sidebar')
-    <p>This is appended to the master sidebar.</p>
-@stop
-
 @section('content')
-    <p>This is my body content.</p>
-  	<div class="welcome">
-		<a href="http://laravel.com" title="Laravel PHP Framework"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIcAAACHCAYAAAA850oKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoyNUVCMTdGOUJBNkExMUUyOTY3MkMyQjZGOTYyREVGMiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoyNUVCMTdGQUJBNkExMUUyOTY3MkMyQjZGOTYyREVGMiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjI1RUIxN0Y3QkE2QTExRTI5NjcyQzJCNkY5NjJERUYyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjI1RUIxN0Y4QkE2QTExRTI5NjcyQzJCNkY5NjJERUYyIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+g6J7EAAAEL1JREFUeNrsXQmU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" alt="Laravel PHP Framework"></a>
-		<h1>You have arrived.</h1>
-	</div>
+<div class="container">
+<div class="jumbotron home-search" style="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+                <p class="main_description">Search thousands of stores, brands, products and user classifieds all in one place</p>
+
+                <br><br>
+                <div class="row">
+
+                    <div class="col-sm-8 col-sm-offset-2" style="text-align: center">
+                        <div class="row">
+
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div class="input-group">
+                                    <span class="input-group-addon input-group-addon-text">Find me a</span>
+
+                                    <input type="text" class="form-control col-sm-3" placeholder="e.g. BMW, 2 bed flat, sofa ">
+                                    <div class=" input-group-addon hidden-xs">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown">
+                                                All categories <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Cars, Vans &amp; Motorbikes</a></li>
+                                                <li><a href="#">Community</a></li>
+                                                <li><a href="#">Flats &amp; Houses</a></li>
+                                                <li><a href="#">For Sale</a></li>
+                                                <li><a href="#">Jobs</a></li>
+                                                <li><a href="#">Pets</a></li>
+                                                <li><a href="#">Services</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12" style="text-align: center">
+                        <a href="listings.html" class="btn btn-primary search-btn">Search</a>
+                    </div>
+                </div>                
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12" style="text-align: center">
+
+                        <div id="quotes">
+                            <div class="text-item" style="display: block;">Boom! <strong>Vince</strong> just sold a <strong>Washing Machine</strong> in <strong>Sheffield</strong></div>
+                            <div class="text-item" style="display: none;"><strong>Julia</strong> is availiable for <strong>home cleaning</strong> in <strong>Manchester</strong></div>
+                            <div class="text-item" style="display: none;">Success! <strong>Paul</strong> has just sold a <strong>Mercedes-Benz E-class</strong> in <strong>Liverpool</strong></div>
+                            <div class="text-item" style="display: none;">Hey, <strong>Uber</strong> has a <strong>job opening</strong> in <strong>London</strong></div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @stop
 
 
+@section('bottom-container')
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-8">
+	            <div class="row directory">
+	                <div class="col-sm-12 ">
+	                    <h2><span>Directory listings</span></h2>
+	                </div>
+	            </div>
+	        
+	        
+	        <!-- Directories -->
+	        <div class="row directory">
+                <div class="col-xs-12">
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-home"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Houses and flats</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-truck"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Car and vehicles</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-shopping-cart"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Shopping</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-home"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Houses and flats</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-truck"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Car and vehicles</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-shopping-cart"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Shopping</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-home"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Houses and flats</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-truck"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Car and vehicles</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="directory-block col-sm-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="fa fa-shopping-cart"></i>
+                            </div>
+                            <div class="col-sm-9">
+                                <h4>Shopping</h4>
+                                <p><a href="listings.html">Cars</a>, <a href="listings.html">Car Parts</a>, <a href="listings.html">Campervans</a>, <a href="listings.html">Motobikes</a>, <a href="listings.html">Scooters</a>, <a href="listings.html">Vans</a>, <a href="listings.html">Trucks</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Directories -->
+
+            <!-- Country checker -->
+            <div class="row directory-counties hidden-xs">
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class=""><a data-toggle="tab" href="#popular">Popular cities</a></li>
+                                                <li class="active"><a data-toggle="tab" href="#EN">England</a></li>                                                
+                                                <li class=""><a data-toggle="tab" href="#SC">Scotland</a></li>
+                                                <li class="hidden-md"><a data-toggle="tab" href="#NI">Northern Ireland</a></li>
+                                                <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" id="myTabDrop1" href="#">Other countries <b class="caret"></b></a>
+                            <ul aria-labelledby="myTabDrop1" role="menu" class="dropdown-menu">
+                                <li><a href="listings.html">USA</a></li>
+                                <li><a href="listings.html">France</a></li>
+                                <li><a href="listings.html">Germany</a></li>
+                                <li><a href="listings.html">Spain and Portugal</a></li>
+                                <li><a href="listings.html">Switzerland</a></li>
+                                <li><a href="listings.html">Other Europe</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="tab-content " id="myTabContent">
+                                                <div id="popular" class="tab-pane counties-pane">
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">London</a><br>
+                                                                                <a href="listings.html">Edinburgh</a><br>
+                                                                                <a href="listings.html">Manchester</a><br>
+                                                                                <a href="listings.html">Birmingham</a><br>
+                                                                                <a href="listings.html">Glasgow</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Liverpool</a><br>
+                                                                                <a href="listings.html">Bristol</a><br>
+                                                                                <a href="listings.html">Oxford</a><br>
+                                                                                <a href="listings.html">Cambridge</a><br>
+                                                                                <a href="listings.html">Cardiff</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Brighton</a><br>
+                                                                                <a href="listings.html">Newcastle-upon-Tyne</a><br>
+                                                                                <a href="listings.html">Leeds</a><br>
+                                                                                <a href="listings.html">York</a><br>
+                                                                                <a href="listings.html">Inverness</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Bath</a><br>
+                                                                                <a href="listings.html">Nottingham</a><br>
+                                                                                <a href="listings.html">Reading</a><br>
+                                                                                <a href="listings.html">Aberdeen</a><br>
+                                                                                <a href="listings.html">Chester</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                    </div>
+
+
+                                                                        <div id="EN" class="tab-pane counties-pane active">
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Avon</a><br>
+                                                                                <a href="listings.html">Bedfordshire</a><br>
+                                                                                <a href="listings.html">Berkshire</a><br>
+                                                                                <a href="listings.html">Buckinghamshire</a><br>
+                                                                                <a href="listings.html">Cambridgeshire</a><br>
+                                                                                <a href="listings.html">Cheshire</a><br>
+                                                                                <a href="listings.html">Cleveland</a><br>
+                                                                                <a href="listings.html">Cornwall</a><br>
+                                                                                <a href="listings.html">Cumbria</a><br>
+                                                                                <a href="listings.html">Derbyshire</a><br>
+                                                                                <a href="listings.html">Devon</a><br>
+                                                                                <a href="listings.html">Dorset</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Durham</a><br>
+                                                                                <a href="listings.html">East Sussex</a><br>
+                                                                                <a href="listings.html">Essex</a><br>
+                                                                                <a href="listings.html">Gloucestershire</a><br>
+                                                                                <a href="listings.html">Hampshire</a><br>
+                                                                                <a href="listings.html">Herefordshire</a><br>
+                                                                                <a href="listings.html">Hertfordshire</a><br>
+                                                                                <a href="listings.html">Isle of Wight</a><br>
+                                                                                <a href="listings.html">Kent</a><br>
+                                                                                <a href="listings.html">Lancashire</a><br>
+                                                                                <a href="listings.html">Leicestershire</a><br>
+                                                                                <a href="listings.html">Lincolnshire</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">London</a><br>
+                                                                                <a href="listings.html">Merseyside</a><br>
+                                                                                <a href="listings.html">Middlesex</a><br>
+                                                                                <a href="listings.html">Norfolk</a><br>
+                                                                                <a href="listings.html">Northamptonshire</a><br>
+                                                                                <a href="listings.html">Northumberland</a><br>
+                                                                                <a href="listings.html">North Humberside</a><br>
+                                                                                <a href="listings.html">North Yorkshire</a><br>
+                                                                                <a href="listings.html">Nottinghamshire</a><br>
+                                                                                <a href="listings.html">Oxfordshire</a><br>
+                                                                                <a href="listings.html">Rutland</a><br>
+                                                                                <a href="listings.html">Shropshire</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Somerset</a><br>
+                                                                                <a href="listings.html">South Humberside</a><br>
+                                                                                <a href="listings.html">South Yorkshire</a><br>
+                                                                                <a href="listings.html">Staffordshire</a><br>
+                                                                                <a href="listings.html">Suffolk</a><br>
+                                                                                <a href="listings.html">Surrey</a><br>
+                                                                                <a href="listings.html">Tyne and Wear</a><br>
+                                                                                <a href="listings.html">Warwickshire</a><br>
+                                                                                <a href="listings.html">West Midlands</a><br>
+                                                                                <a href="listings.html">West Sussex</a><br>
+                                                                                <a href="listings.html">West Yorkshire</a><br>
+                                                                                <a href="listings.html">Worcestershire</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                    </div>
+                                                          
+                                                                        <div id="SC" class="tab-pane counties-pane">
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Aberdeenshire</a><br>
+                                                                                <a href="listings.html">Angus</a><br>
+                                                                                <a href="listings.html">Argyll</a><br>
+                                                                                <a href="listings.html">Ayrshire</a><br>
+                                                                                <a href="listings.html">Banffshire</a><br>
+                                                                                <a href="listings.html">Berwickshire</a><br>
+                                                                                <a href="listings.html">Bute</a><br>
+                                                                                <a href="listings.html">Caithness</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Clackmannanshire</a><br>
+                                                                                <a href="listings.html">Dumfriesshire</a><br>
+                                                                                <a href="listings.html">Dunbartonshire</a><br>
+                                                                                <a href="listings.html">East Lothian</a><br>
+                                                                                <a href="listings.html">Fife</a><br>
+                                                                                <a href="listings.html">Inverness-shire</a><br>
+                                                                                <a href="listings.html">Kincardineshire</a><br>
+                                                                                <a href="listings.html">Kinross-shire</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Kirkcudbrightshire</a><br>
+                                                                                <a href="listings.html">Lanarkshire</a><br>
+                                                                                <a href="listings.html">Midlothian</a><br>
+                                                                                <a href="listings.html">Moray</a><br>
+                                                                                <a href="listings.html">Nairnshire</a><br>
+                                                                                <a href="listings.html">Orkney</a><br>
+                                                                                <a href="listings.html">Peeblesshire</a><br>
+                                                                                <a href="listings.html">Perthshire</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Renfrewshire</a><br>
+                                                                                <a href="listings.html">Ross-shire</a><br>
+                                                                                <a href="listings.html">Roxburghshire</a><br>
+                                                                                <a href="listings.html">Selkirkshire</a><br>
+                                                                                <a href="listings.html">Shetland</a><br>
+                                                                                <a href="listings.html">Stirlingshire</a><br>
+                                                                                <a href="listings.html">Sutherland</a><br>
+                                                                                <a href="listings.html">West Lothian</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Wigtownshire</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                    </div>
+                                                                        <div id="NI" class="tab-pane counties-pane">
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Antrim</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Armagh</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Down</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Fermanagh</a><br>
+                                                                            </div>
+                                </div>
+
+                            </div>
+                                                        <div class="col-sm-3">
+
+                                <div class="row directory-block">
+                                    <div class="col-sm-12">
+                                                                                <a href="listings.html">Londonderry</a><br>
+                                                                            </div>
+                                </div>
+
+	                            </div>
+	                                                        <div class="col-sm-3">
+
+	                                <div class="row directory-block">
+	                                    <div class="col-sm-12">
+	                                                                                <a href="listings.html">Tyrone</a><br>
+	                                                                            </div>
+	                                </div>
+
+	                            </div>
+	                                                    </div>
+	                                            </div>
+	                </div>
+
+
+	            </div>
+	            <!-- End of country checker block -->
+
+			</div> 
+			<!-- End of Directory section -->
+
+			<div class="col-xs-12 col-md-4 ">
+            <div class="row">
+
+            	<!-- Quick guide -->
+            	<div class="col-xs-12 col-sm-3 col-md-12  col-lg-11 pull-right">
+                    <br class="hidden-sm hidden-xs">
+                    <br class="hidden-sm hidden-xs">
+                    <br class="hidden-sm hidden-xs">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Quick guide</div>
+
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="typography.html">Our tips to stay safe</a></li>
+                            <li class="list-group-item"><a href="typography.html">How to buy guide</a></li>
+                            <li class="list-group-item"><a href="typography.html">How to sell guide</a></li>
+                            <li class="list-group-item"><a href="typography.html">Help and contact us</a></li>
+                            <li class="list-group-item"><a href="typography.html">Frequently asked questions</a></li>
+                        </ul>
+                    </div>
+                </div>
+            	<!-- End of quick guide -->
+
+                <!-- Social plugins -->
+                <div class="col-xs-12 col-sm-5 col-md-12  col-lg-11 pull-right">
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="height: 102px; display: block;">
+                            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="265" data-layout="standard" data-action="like" data-show-faces="false" data-share="false" style="display: block; height: 30px;"></div>
+                            <br />
+                            <!-- Place this tag where you want the +1 button to render. -->
+                            <div class="g-plusone" data-annotation="inline" data-width="300" style="display: block; height: 30px;"></div>
+
+                            <!-- Place this tag after the last +1 button tag. -->
+                            <script type="text/javascript">
+                                (function() {
+                                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                                    po.src = 'https://apis.google.com/js/platform.js';
+                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                                })();
+                            </script>
+                        </div>
+
+                        <div class="panel-footer">
+                            <a href="https://twitter.com/twitterapi" class="twitter-follow-button" data-dnt="true">Follow @twitterapi</a>
+                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                        </div>
+                    </div>    
+
+                    <p class="main_slogan" style="margin: 28px 0">Currently listing 355,785 classified ads in the United Kingdom.</p>
+                </div>
+                <!-- End of social plugins -->
+
+                <!-- Premium block -->
+                <div class="col-xs-12 col-sm-4 col-md-12  col-lg-11 pull-right" >
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Premium listings</div>
+                        <div class="panel-body">
+                            <div class="featured-gallery">
+                                <div class="row">
+                                    <div class="col-sm-6 col-xs-4 featured-thumbnail"  data-toggle="tooltip" data-placement="top" title="Programmer job availiable at Uber in London">
+                                        <a href="details.html" class="">                                            
+                                            {{ HTML::image("photos/uberlogo_large_verge_medium_landscape.png", '', array('style' => 'width: 100%')) }}
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-4 featured-thumbnail"  data-toggle="tooltip" data-placement="top"  title="Porsche Boxster S, 2.9 2dr reg Apr 2007 ">
+                                        <a href="details.html" class="">                                            
+                                            {{ HTML::image("photos/car-78738_150.jpg", '', array()) }}
+                                        </a>
+                                    </div>
+
+
+
+                                    <div class="col-sm-6 col-xs-4 featured-thumbnail" data-toggle="tooltip" data-placement="top"  title="Please find my lost cat">
+                                        <a href="details.html" class="" >                                            
+                                            {{ HTML::image("photos/cats-q-c-120-80-4.jpg", '', array('style' => 'width: 100%')) }}
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-4 featured-thumbnail" data-toggle="tooltip" data-placement="top"  title="Mini copper looking for a quick sell !! - London - £2,485">
+                                        <a href="details.html" class="" >                                            
+                                            {{ HTML::image("photos/transport-q-c-120-80-8.jpg", '', array()) }}
+                                        </a>
+                                    </div>
+
+
+
+                                    <div class="col-sm-6 col-xs-4 featured-thumbnail" data-toggle="tooltip" data-placement="top"  title="Old MP3 player for sale">
+                                        <a href="details.html" class="" >                                            
+                                            {{ HTML::image("photos/technics-q-c-120-80-10.jpg", '', array('style' => 'width: 100%')) }}
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-4 featured-thumbnail" data-toggle="tooltip" data-placement="top" title="Designer job availiable at Uber in London">
+                                        <a href="details.html" class="" >                                            
+                                            {{ HTML::image("photos/uberlogo_large_verge_medium_landscape.png", '', array()) }}
+                                        </a>
+                                    </div>
+                                </div>    
+                            </div>    
+                        </div>    
+                    </div>    
+                </div>    
+                <!-- End of Premium Block -->
+
+
+
+	            </div>
+	        </div> 
+
+		</div>
+	</div>
+</div>    
+@stop

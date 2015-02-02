@@ -54,4 +54,16 @@ return array(
 
 	'storage' => __DIR__.'/../app/storage',
 
+
+	/*
+	|--------------------------------------------------------------------------
+	| Custom: Path to custom upload folder
+	|--------------------------------------------------------------------------
+	|
+	| Path where the system is going to store the user data 
+	| under the storage path
+	| 
+	*/
+	'uploads' => __DIR__.'/../app/storage/uploads',
+
 );
