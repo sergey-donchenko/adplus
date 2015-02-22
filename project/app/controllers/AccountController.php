@@ -10,8 +10,9 @@ class AccountController extends \BaseController {
 	public function index()
 	{
 		$aAccountDetails = array();
+		$this->prependTitle('Account Dashboard');		
 
-		return View::make('account.dashboard');	
+		return View::make('account.dashboard', array('headTitle' => $this->getTitles()));	
 	}
 
 
@@ -25,6 +26,43 @@ class AccountController extends \BaseController {
 		return View::make('account.login');	
 	}
 
+	/**
+	 * Display login page
+	 *
+	 * @return Response
+	 */
+	public function authorization()
+	{
+		$inputData = Input::get('formData');
+		parse_str($inputData, $formFields);
+
+		$userData = array(
+			'email'     =>  $formFields['email'],
+			'password'  =>  $formFields['password'],
+		);
+
+		$rules = array(
+			'email'     =>  'required|email',
+			'password'  =>  'required|min:6',
+		);
+
+		$validator = Validator::make($userData, $rules);
+
+		if($validator->fails()) {
+			return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+		} else {
+			$password = $userData['password'];
+		    //hash it now
+		    $userData['password'] =    Hash::make($userData['password']);
+		    
+		}
+
+		die('Do an authorization...');
+	}
+
 
 	/**
 	 * Show the form for creating a new resource.
@@ -33,7 +71,9 @@ class AccountController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('account.create');
+		$this->prependTitle('Create account');
+
+		return View::make('account.create', array('headTitle' => $this->getTitles()));
 	}
 
 
@@ -62,13 +102,14 @@ class AccountController extends \BaseController {
 
 	/**
 	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
+	 *	 
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		//
+		$this->prependTitle('Edit Account Information');
+		
+		return View::make('account.edit', array('headTitle' => $this->getTitles()));
 	}
 
 

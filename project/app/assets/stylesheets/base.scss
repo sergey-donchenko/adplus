@@ -60,6 +60,17 @@ h2 {
 	margin-bottom: 20px;
 }
 
+h3 {
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.panel {
+	h3 {
+		margin: 0;
+	}	
+}
+
 .container {
   max-width: 997px !important;
 }

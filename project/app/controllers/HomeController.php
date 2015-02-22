@@ -17,7 +17,9 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		return View::make('hello');
+		
+die('Check!!!!');
+		return View::make('hello', 'headTitle' => $this->getTitles());
 	}
 
 }

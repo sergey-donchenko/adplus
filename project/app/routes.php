@@ -18,19 +18,22 @@ Route::get('/', function() {
 
 
 Route::group(array('prefix' => 'listing'), function() {
-	Route::get('/', array('uses' => 'ListingController@index'));
+	Route::get('/', array('as' => 'listing', 'uses' => 'ListingController@index'));
 });
 
 
 Route::group(array('prefix' => 'account'), function() {
+	Route::get('/edit', array('as' => 'account.edit', 'uses' => 'AccountController@edit'));
 	Route::get('/create', array('as' => 'account.create', 'uses' => 'AccountController@create'));
-	Route::get('/login', array('uses' => 'AccountController@login'));
+	Route::get('/login', array('as' => 'account.login', 'uses' => 'AccountController@login'));	
 	Route::get('/dashboard', array('as' => 'account.dashboard', 'uses' => 'AccountController@index'));
+
+	Route::post('/login', array('as' => 'account.login', 'uses' => 'AccountController@authorization'));
 });
 
 
 Route::group(array('prefix' => 'advert'), function() {
-	Route::get('/create.html', array('uses' => 'AdvertController@create'));
+	Route::get('/create.html', array('as'=>'advert.create', 'uses' => 'AdvertController@create'));
 });
 
 // 	// main page for the admin section (app/views/admin/dashboard.blade.php)

@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 		    },
 
 		    dist: {
-		        src: [		            		            
+		        src: [	
 		            './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
 		            './app/assets/javascript/frontend.js'
 		        ],
@@ -62,6 +62,11 @@ module.exports = function(grunt) {
 			        cwd: './bower_components/jquery/dist/',
 			        src: ['jquery.min.js'],
 			        dest: './public/js/jquery'
+			    }, {
+			    	expand: true,
+			        cwd: './bower_components/regula/dist/',
+			        src: ['regula-1.3.4.min.js'],
+			        dest: './public/js/'			    	
 			    }, {
 			        expand: true,
 			        cwd: './bower_components/dropzone/downloads/',

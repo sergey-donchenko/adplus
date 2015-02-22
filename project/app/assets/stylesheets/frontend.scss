@@ -421,6 +421,10 @@
 	}	
 
 	.nav > li > a {
+		&.active {
+			font-weight : bold;
+		}
+
 		padding: 1px 10px;
 	}
 
@@ -682,4 +686,57 @@ p.muted {
 
 /****************************************
 * End of advert creation page
+*/
+
+/**
+ * Dashboard
+*/
+#visualization {
+	height: 300px;
+	width: 98%;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.dashboard {
+	p {
+		font-size: 13px;
+	}	
+}
+
+.nav {
+	a {
+		&.active {
+			font-weight : bold;
+		}	
+	}		
+}
+
+/**
+* End of Dashboard settings
+*/
+
+
+/********************************************
+* Forms
+*/
+.error {
+	.controls {
+		$error-color: #a94442;
+
+		.error-inline {
+			color : $error-color;
+			display: block;
+			font-size: 12px;
+			padding-left: 2px;
+		}
+
+		.form-control {
+			border: 1px solid $error-color !important;
+			color: $error-color !important;
+		}	
+	}
+}
+/*******************************************
+* End of forms
 */

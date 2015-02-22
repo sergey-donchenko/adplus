@@ -2,16 +2,14 @@
 
 @section('content')
 	<hr class="topbar"/>
-	<div class="container">
-    	<br />
-    	
+	<div class="container">    	    	
     	<div class="row">
     		<div class="col-sm-3">
     			<div class="sidebar-account">		
 					
 					<div class="row ">
-						<!-- Modal box: Login form -->
-        				@include('account.html.left-nav');
+						<!-- Account vertical menu -->
+        				@include('account.html.left-nav', array('selected' => 'create-ad'))
 					</div>
 
 					<div class="row hidden-xs">

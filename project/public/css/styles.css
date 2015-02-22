@@ -9026,6 +9026,15 @@ h2 {
   margin-bottom: 20px;
 }
 
+h3 {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.panel h3 {
+  margin: 0;
+}
+
 .container {
   max-width: 997px !important;
 }
@@ -9385,6 +9394,9 @@ h2 {
 .sidebar .nav > li > a {
   padding: 1px 10px;
 }
+.sidebar .nav > li > a.active {
+  font-weight: bold;
+}
 .sidebar label {
   font-weight: 100;
 }
@@ -9586,6 +9598,44 @@ p.muted {
 
 /****************************************
 * End of advert creation page
+*/
+/**
+ * Dashboard
+*/
+#visualization {
+  height: 300px;
+  width: 98%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.dashboard p {
+  font-size: 13px;
+}
+
+.nav a.active {
+  font-weight: bold;
+}
+
+/**
+* End of Dashboard settings
+*/
+/********************************************
+* Forms
+*/
+.error .controls .error-inline {
+  color: #a94442;
+  display: block;
+  font-size: 12px;
+  padding-left: 2px;
+}
+.error .controls .form-control {
+  border: 1px solid #a94442 !important;
+  color: #a94442 !important;
+}
+
+/*******************************************
+* End of forms
 */
 
 /*# sourceMappingURL=styles.css.map */
