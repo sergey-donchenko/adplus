@@ -11,10 +11,10 @@
 |
 */
 
-
-Route::get('/', function() {
-	return View::make('hello');
-});
+Route::get('/', array('as' => 'home', 'uses' => 'HomeController@home'));
+// Route::get('/', function() {
+	
+// });
 
 
 Route::group(array('prefix' => 'listing'), function() {
@@ -23,12 +23,13 @@ Route::group(array('prefix' => 'listing'), function() {
 
 
 Route::group(array('prefix' => 'account'), function() {
-	Route::get('/edit', array('as' => 'account.edit', 'uses' => 'AccountController@edit'));
+	Route::get('/edit', array('as' => 'account.edit', 'before' => 'auth', 'uses' => 'AccountController@edit'));
 	Route::get('/create', array('as' => 'account.create', 'uses' => 'AccountController@create'));
 	Route::get('/login', array('as' => 'account.login', 'uses' => 'AccountController@login'));	
-	Route::get('/dashboard', array('as' => 'account.dashboard', 'uses' => 'AccountController@index'));
+	Route::get('/dashboard', array('as' => 'account.dashboard', 'before' => 'auth', 'uses' => 'AccountController@index'));
 
-	Route::post('/login', array('as' => 'account.login', 'uses' => 'AccountController@authorization'));
+	Route::post('/login', array('as' => 'account.login', /*'before' => 'csrf',*/ 'uses' => 'AccountController@authorization'));
+	Route::get('/logout', array('as' => 'account.logout', 'uses' => 'AccountController@logout'));
 });
 
 

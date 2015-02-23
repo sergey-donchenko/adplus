@@ -42,19 +42,27 @@
 
                     <ul class="nav navbar-nav navbar-right visible-xs">
                         <li class="active"><a href="#">Home</a></li>
+                        <li><a href="{{ URL::route('listing') }}"><?php echo Lang::get('pages.nav.listing'); ?></a></li>                        
+                        <li><a href="{{ URL::route('advert.create') }}"><?php echo Lang::get('pages.nav.post_an_ad'); ?></a></li>
+                        @if( Auth::check() )
+                        <li><a href="{{ URL::route('account.dashboard') }}"><?php echo Lang::get('pages.nav.my_account'); ?></a></li>
+                        <li><a href="{{ URL::route('account.logout') }}"><b><?php echo Lang::get('pages.nav.logout'); ?></b></a></li>
+                        @else
                         <li><a href="{{ URL::route('account.login') }}"><?php echo Lang::get('pages.nav.login'); ?></a></li>
                         <li><a href="{{ URL::route('account.create') }}"><?php echo Lang::get('pages.nav.register'); ?></a></li>
-                        <li><a href="{{ URL::route('listing') }}"><?php echo Lang::get('pages.nav.listing'); ?></a></li>
-                        <li><a href="{{ URL::route('account.dashboard') }}"><?php echo Lang::get('pages.nav.my_account'); ?></a></li>
-                        <li><a href="{{ URL::route('advert.create') }}"><?php echo Lang::get('pages.nav.post_an_ad'); ?></a></li>
+                        @endif                        
                     </ul> 
                     <div class="nav navbar-nav navbar-right hidden-xs">
                         <div class="row">
                             <div class="pull-right">
-                                <a data-toggle="modal" data-target="#modalLogin" href="#"><?php echo Lang::get('pages.nav.login'); ?></a> | 
-                                <a href="{{ URL::route('account.create') }}"><?php echo Lang::get('pages.nav.register'); ?></a> | 
                                 <a href="{{ URL::route('listing') }}"><?php echo Lang::get('pages.nav.listing'); ?></a> | 
-                                <a href="{{ URL::route('account.dashboard') }}"><?php echo Lang::get('pages.nav.my_account'); ?></a>
+                                @if( Auth::check() )
+                                <a href="{{ URL::route('account.dashboard') }}"><?php echo Lang::get('pages.nav.my_account'); ?></a> | 
+                                <a href="{{ URL::route('account.logout') }}"><b><?php echo Lang::get('pages.nav.logout'); ?></b></a> 
+                                @else
+                                <a data-toggle="modal" data-target="#modalLogin" href="#"><?php echo Lang::get('pages.nav.login'); ?></a> | 
+                                <a href="{{ URL::route('account.create') }}"><?php echo Lang::get('pages.nav.register'); ?></a> 
+                                @endif                                
                                 <a href="{{ URL::route('advert.create') }}" class="btn btn-warning post-ad-btn"><?php echo Lang::get('pages.nav.post_an_ad'); ?></a>
                             </div>	
                         </div>
@@ -73,6 +81,10 @@
         <!-- Modal box: Forgot form -->
         @include('popups.forgot')
         
+        <!-- Modal box: Forgot form -->
+        @include('popups.notification')
+
+
 
         <!-- Bottom container section -->
         @section('bottom-container')

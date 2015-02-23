@@ -43,7 +43,7 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+			return Redirect::guest('/account/login');
 		}
 	}
 });
@@ -82,7 +82,7 @@ Route::filter('guest', function()
 */
 
 Route::filter('csrf', function()
-{
+{	
 	if (Session::token() !== Input::get('_token'))
 	{
 		throw new Illuminate\Session\TokenMismatchException;

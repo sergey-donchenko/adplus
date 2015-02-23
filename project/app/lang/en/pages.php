@@ -5,6 +5,7 @@
 			'register' => 'Register',
 			'my_account' => 'My account',
 			'login' => 'Login',
+			'logout' => 'Logout',
 			'post_an_ad' => 'Post An Ad',
 			'home' => 'Home',
 			'typography' => 'Typography',
@@ -35,6 +36,8 @@
 
 		'account' => array(
 			'my_account_title' => 'My account',
+			'my_admin_title' => 'Administration',
+
 			'dashboard' => 'Dashboard',
 			'edit_account' => 'Edit Account Details',
 			'my_profile' => 'My profile',
@@ -47,6 +50,13 @@
 			'unlimited_listings' => 'Unlimited listings',
 			'promote_your_ads' => 'Promote your ads',
 			'listing_views_in_the_last_hours' => ':a_count listing views in the last :h_count hours',
+		),
+
+		'admin' => array(
+			'categories' => 'Categories',
+			'users' => 'Users',
+			'manage_ads' => 'Manage Ads',
+			'settings' => 'Settings',
 		),
 
 		'tips' => array(

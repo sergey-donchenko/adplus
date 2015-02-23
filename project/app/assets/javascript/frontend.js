@@ -106,17 +106,7 @@ var adPlusExchange = (function() {
 
                     if ( element ) {
                         if ( element.failingElements.length > 0 ) {
-                            jQuery( element.failingElements[0] )
-                                .unbind('keypress')
-                                .bind('keypress', function(){
-                                    jQuery(this).parents('.form-group')
-                                        .removeClass('error')
-                                        .find('.error-inline')
-                                        .html('');    
-                            }).parents('.form-group')
-                                .addClass('error')
-                                .find('.error-inline')
-                                .html( element.message );    
+                            this.fieldError( element.failingElements[0], element.message );                                
                         } 
                         errors.push( element );    
                     }                                         
@@ -140,6 +130,114 @@ var adPlusExchange = (function() {
                     posting = jQuery.post( url, { formData: data } );
 
                 return posting;     
+            },
+
+            /**
+             * Handle the error for the particular field
+             *
+             * @param <object> field - handled element
+             * @param <string> message  - the text of the error
+             * 
+             * @return <object> - return the current object
+            */
+            fieldError : function( field, message ) {
+                
+                if ( field ) {
+                    jQuery( field )
+                        .unbind('keypress')
+                        .bind('keypress', function(){
+                            jQuery(this).parents('.form-group')
+                                .removeClass('error')
+                                .find('.error-inline')
+                                .html('');    
+                    }).parents('.form-group')
+                        .addClass('error')
+                        .find('.error-inline')
+                        .html( message );
+                }
+                        
+                return this;    
+            },
+
+            /**
+             * Show notifications in Dialog
+             *
+             * @param <string> title - dialog title
+             * @param <string> message - the dialog body
+             * @param <string> type - the dialog type
+             *   - success
+             *   - error
+             *   - info
+             *   - warning
+            */
+            showMessage : function( title, message, type, hideTheRespPopup ) {
+                var sModalId = 'modalNotification',
+                    sClass = '',
+                    sIcon = ''; 
+                
+                // Hide all previously opened dialogs
+                if ( hideTheRespPopup === true) {
+                    jQuery('.modal').modal('hide');    
+                }
+                
+                
+                if ( title ) {
+                    jQuery('#' + sModalId).find('.modal-title')
+                        .html(title);    
+                }
+                
+                switch ( type ) {
+                    case 'success':
+                        sClass = 'alert-success'; 
+                        sIcon = 'glyphicon-ok-sign';
+                        break;    
+                    case 'info':
+                        sClass = 'alert-info';  
+                        sIcon = 'glyphicon-info-sign';  
+                        break;
+                    case 'error':
+                        sClass = 'alert-danger'; 
+                        sIcon = 'glyphicon-exclamation-sign';
+                        break;    
+                    default:
+                        sClass = 'alert-warning';
+                        sIcon = 'glyphicon-warning-sign';
+                                            
+                }
+
+                message = '<div class="alert ' + sClass + '" role="alert">'
+                    //+ '<span class="glyphicon ' + sIcon + '" aria-hidden="true"></span>'
+                    + message 
+                    + '</div>'; 
+                
+
+                if ( message ) {
+                    jQuery('#' + sModalId).find('.modal-body')
+                        .html( message );
+                }                
+
+                jQuery('#' + sModalId).modal();
+
+                return this;
+            },
+
+            /**
+             * Redirect to the URL
+            */
+            toUrl : function( url, timeout ) {
+                if ( url ) {
+
+                    if ( !timeout ) { 
+                        timeout = 0;
+                    } 
+
+                    setTimeout(function() {
+                        window.location.href = url;
+                    }, timeout);
+                    
+                }
+
+                return this;
             }
         }
     }
@@ -196,17 +294,28 @@ jQuery(function() {
     // Handle login form
     if (frmLoginId) {        
         jQuery('#' + frmLoginId).on('submit', function( event ) {
+            var form = this;
+
             event.preventDefault();
 
             // Validate the form
-            if ( adPlusExchange.getInstance().validate( this ) === false ) {                
+            if ( adPlusExchange.getInstance().validate( form ) === false ) {                
                 return false;
             }
             
             // Submit the form
-            adPlusExchange.getInstance().submit( this ).done( function( data ) {
+            adPlusExchange.getInstance().submit( form ).done( function( data ) {
 
-                console.log('That\'s it!!!');
+                if ( data.fail ) {
+                    for(var index in data.errors ) {
+                        adPlusExchange.getInstance()
+                            .fieldError( jQuery( form ).find( '#' + index), data.errors[index][0] );
+                    }
+                } else {
+                    adPlusExchange.getInstance()
+                        .showMessage('Redirecting the home page...', data.message, 'success', true )
+                        .toUrl('/', 2000);
+                }               
 
                 console.log( data );
             });

@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
 			'user_prefix' => 'Mr', 
 			'user_firstname' => 'John', 
 			'user_lastname' => 'Dev', 
-			'user_password' => Hash::make('admin'), 
+			'password' => Hash::make('password'), 
 			'user_display_name' => 'Admin', 
 			'user_company_name' => 'AdPlus', 
 			'user_is_active' => '1', 

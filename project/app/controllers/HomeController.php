@@ -2,6 +2,11 @@
 
 class HomeController extends BaseController {
 
+	public function home()
+	{
+		return View::make('hello');
+	}	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Home Controller
@@ -17,9 +22,7 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		
-die('Check!!!!');
-		return View::make('hello', 'headTitle' => $this->getTitles());
+		return View::make('hello', ['headTitle' => $this->getTitles()]);
 	}
 
 }

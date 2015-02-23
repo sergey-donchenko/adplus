@@ -33,12 +33,21 @@ class AccountController extends \BaseController {
 	 */
 	public function authorization()
 	{
+		// Check if user has been authorized already
+		if ( Auth::check() ) {
+			return Response::json(array(
+		        'fail' => false,
+		        'message' => 'User has been successfully authenticated already.'
+		    ));
+		}
+			
 		$inputData = Input::get('formData');
 		parse_str($inputData, $formFields);
 
 		$userData = array(
 			'email'     =>  $formFields['email'],
 			'password'  =>  $formFields['password'],
+			'rememberme'  =>  isset($formFields['rememberme']) ? true : false,
 		);
 
 		$rules = array(
@@ -54,15 +63,36 @@ class AccountController extends \BaseController {
 	            'errors' => $validator->getMessageBag()->toArray()
 	        ));
 		} else {
-			$password = $userData['password'];
-		    //hash it now
-		    $userData['password'] =    Hash::make($userData['password']);
-		    
-		}
 
-		die('Do an authorization...');
+		    if (Auth::attempt(array('user_email' => $formFields['email'], 'password' => $userData['password'], 'user_is_active' => '1'), $userData['rememberme']) ) {
+			    return Response::json(array(
+		            'fail' => false,
+		            'message' => 'User has successfully authenticated.'
+		        ));
+			} else {
+				return Response::json(array(
+		            'fail' => true,
+		            'errors' => array(
+		            	'email' => array(
+		            		0 => 'The User cannot be found in the system.'
+		            	)
+		            )
+		        ));
+			}		    
+		}
 	}
 
+	/**
+	 * Logout from the system
+	*/
+	public function logout() 
+	{		
+		if ( Auth::check() ) {
+			Auth::logout();
+		}		
+
+		return Redirect::route('home')->with('flash_notice', 'You are successfully logged out.');
+	}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -71,7 +101,8 @@ class AccountController extends \BaseController {
 	 */
 	public function create()
 	{
-		$this->prependTitle('Create account');
+		$this->prependTitle('Create account');		
+		
 
 		return View::make('account.create', array('headTitle' => $this->getTitles()));
 	}

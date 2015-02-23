@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration {
 			// create two fields: created_at and updated_at
 			$table->timestamps();
 			$table->softDeletes();
-			$table->char('user_is_active', '0');
+			$table->char('user_is_active', '1')->default('0');
 
 			$table->engine = 'InnoDB';
 			$table->index(array('user_email', 'user_password'), 'indx_users_email_pass');
