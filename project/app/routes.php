@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,10 +11,6 @@
 */
 
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@home'));
-// Route::get('/', function() {
-	
-// });
-
 
 Route::group(array('prefix' => 'listing'), function() {
 	Route::get('/', array('as' => 'listing', 'uses' => 'ListingController@index'));
@@ -27,11 +22,15 @@ Route::group(array('prefix' => 'account'), function() {
 	Route::get('/create', array('as' => 'account.create', 'uses' => 'AccountController@create'));
 	Route::get('/login', array('as' => 'account.login', 'uses' => 'AccountController@login'));	
 	Route::get('/dashboard', array('as' => 'account.dashboard', 'before' => 'auth', 'uses' => 'AccountController@index'));
+	Route::get('/category', array('as' => 'account.add.category', 'before' => 'auth', 'uses' => 'CategoryController@add'));		
 
 	Route::post('/login', array('as' => 'account.login', /*'before' => 'csrf',*/ 'uses' => 'AccountController@authorization'));
 	Route::get('/logout', array('as' => 'account.logout', 'uses' => 'AccountController@logout'));
 });
 
+Route::group(array('prefix' => 'admin'), function() {
+	Route::get('/category', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));	
+});
 
 Route::group(array('prefix' => 'advert'), function() {
 	Route::get('/create.html', array('as'=>'advert.create', 'uses' => 'AdvertController@create'));

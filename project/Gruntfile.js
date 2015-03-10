@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 			        expand: true,
 			        cwd: './bower_components/bootstrap-sass-official/assets/fonts/bootstrap/',
 			        src: ['**'],
-			        dest: './public/fonts/'
+			        dest: './public/fonts/bootstrap/'
 			    }, {
 			        expand: true,
 			        cwd: './bower_components/bootstrap-sass-official/assets/images/',
@@ -76,6 +76,16 @@ module.exports = function(grunt) {
 			    	expand: true,
 			        cwd: './bower_components/dropzone/downloads/css/',
 			        src: ['dropzone.css'],
+			        dest: './public/css/'
+			    }, {
+			    	expand: true,
+			        cwd: './app/assets/javascript/',
+			        src: ['easyTree.js'],
+			        dest: './public/js/'
+			    }, {
+			    	expand: true,
+			        cwd: './app/assets/stylesheets/',
+			        src: ['easyTree.css'],
 			        dest: './public/css/'
 			    }]
         	}
@@ -108,9 +118,25 @@ module.exports = function(grunt) {
         	dist: {
 		        files: {
 		          './public/js/frontend.js': './public/js/frontend.js',
+		          './public/js/easyTree.min.js': './public/js/easyTree.js',
 		        }
 		    }
         },
+
+        cssmin: {
+			target: {
+				options: {
+				    sourceMap: true				    
+				},
+			    files: [{
+			        expand: true,
+			        cwd: './public/css',
+			        src: ['*.css', '!*.min.css'],
+			        dest: './public/css',
+			        ext: '.min.css'
+			    }]
+			}
+		},
 
         phpunit: {
         	classes: {
@@ -148,7 +174,12 @@ module.exports = function(grunt) {
 		        files: ['app/controllers/*.php', 'app/models/*.php'],  //the task will run only when you save files in this location
 		        tasks: ['phpunit']
 		    }  
-        }
+        },
+
+        // REMOVE FILES
+        clean: {
+		    css: ["./public/css/*.css", "!./public/css/*.min.css"]
+		}
 
     });
  	
@@ -157,5 +188,5 @@ module.exports = function(grunt) {
 
  	// Task definition
  	grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['copy', 'sass:dist', 'concat:dist', 'uglify:dist', 'phpunit']);
+    grunt.registerTask('build', ['copy', 'sass:dist', 'concat:dist', 'uglify:dist', 'cssmin', 'phpunit']);
 };        

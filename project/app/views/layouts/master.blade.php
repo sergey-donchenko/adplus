@@ -12,6 +12,8 @@
         @else
         <title>{{ Config::get('template.headTitle') }}</title>
         @endif
+        
+        @yield('header.section')   
 
         {{ HTML::style('/css/dropzone.css') }}
 
@@ -55,14 +57,43 @@
                     <div class="nav navbar-nav navbar-right hidden-xs">
                         <div class="row">
                             <div class="pull-right">
-                                <a href="{{ URL::route('listing') }}"><?php echo Lang::get('pages.nav.listing'); ?></a> | 
+                                <?php /*?> <a href="{{ URL::route('listing') }}"><?php echo Lang::get('pages.nav.listing'); ?></a> <?php */?>
                                 @if( Auth::check() )
-                                <a href="{{ URL::route('account.dashboard') }}"><?php echo Lang::get('pages.nav.my_account'); ?></a> | 
-                                <a href="{{ URL::route('account.logout') }}"><b><?php echo Lang::get('pages.nav.logout'); ?></b></a> 
+                                
+                                @if ( Auth::user()->isAdmin() )
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                        <span class="caret"></span>
+                                    </a>    
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li role="presentation" class="header-of-menu"><strong>Administration</strong></li>
+                                        <li><a href="{{ URL::route('admin.category') }}"><?php echo Lang::get('admin.nav.category'); ?></a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+
+                                    </ul>    
+                                </div>
+                                @endif
+
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-expanded="true">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                        <span class="caret"></span>
+                                    </a>    
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="userMenu">
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href="{{ URL::route('account.dashboard') }}"><?php echo Lang::get('pages.nav.my_account'); ?></a>                                            
+                                        </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href="{{ URL::route('account.logout') }}"><b><?php echo Lang::get('pages.nav.logout'); ?></b></a>                                            
+                                        </li>
+
+                                    </ul>
+                                </div>                                 
                                 @else
                                 <a data-toggle="modal" data-target="#modalLogin" href="#"><?php echo Lang::get('pages.nav.login'); ?></a> | 
                                 <a href="{{ URL::route('account.create') }}"><?php echo Lang::get('pages.nav.register'); ?></a> 
-                                @endif                                
+                                @endif       
                                 <a href="{{ URL::route('advert.create') }}" class="btn btn-warning post-ad-btn"><?php echo Lang::get('pages.nav.post_an_ad'); ?></a>
                             </div>	
                         </div>
@@ -121,6 +152,7 @@
         {{ HTML::script('/js/jquery/jquery.flot.js'); }}
         {{ HTML::script('/js/regula-1.3.4.min.js'); }}
         {{ HTML::script('/js/dropzone.min.js'); }}
+        @yield('footer.script.section')
 		{{ HTML::script('/js/frontend.js'); }}
     </body>
 </html>
