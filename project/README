@@ -1,0 +1,11 @@
+1. Create migration /create a new table/:
+
+    1.1) ./artisan migrate:make create_category_table --create=categories
+    1.2) the above command creates file app/database/migrations/2015_03_29_090046_create_category_table 
+
+2. Execute migration
+   
+   ./artisan migrate    
+
+3. Once the new Controller was added we need to clear the route cache by executing the following command:
+	sudo composer dumpautoload

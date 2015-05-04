@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -15,9 +15,9 @@
         
         @yield('header.section')   
 
-        {{ HTML::style('/css/dropzone.css') }}
+        {{ HTML::style('/css/dropzone.min.css') }}
 
-		{{ HTML::style('/css/styles.css') }}
+		{{ HTML::style('/css/styles.min.css') }}                        
 	</head>
     <body>
        <!--  @section('sidebar')
@@ -100,8 +100,8 @@
                     </div>
                 </div>
         	</div>	
-        </nav>
-        
+        </nav>        
+
         <!-- Content section -->        
         @yield('content')      
 
@@ -153,6 +153,6 @@
         {{ HTML::script('/js/regula-1.3.4.min.js'); }}
         {{ HTML::script('/js/dropzone.min.js'); }}
         @yield('footer.script.section')
-		{{ HTML::script('/js/frontend.js'); }}
+        {{ HTML::script('/js/frontend.js'); }}        		
     </body>
 </html>

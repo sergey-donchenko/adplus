@@ -75,5 +75,10 @@
 		'copyright' => array(
 			'all_right_reserved' => 'All rights reserved',
 			'company_name' => '© Bootstrap Classifieds ' . date('Y')
+		),
+
+		'status' => array(
+			'hidden' => ':object and all related (child) sub elements are hidden.',
+			'shown' => ':object is shown for the Users.'
 		)
 	);

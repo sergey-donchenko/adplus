@@ -16,7 +16,6 @@ Route::group(array('prefix' => 'listing'), function() {
 	Route::get('/', array('as' => 'listing', 'uses' => 'ListingController@index'));
 });
 
-
 Route::group(array('prefix' => 'account'), function() {
 	Route::get('/edit', array('as' => 'account.edit', 'before' => 'auth', 'uses' => 'AccountController@edit'));
 	Route::get('/create', array('as' => 'account.create', 'uses' => 'AccountController@create'));
@@ -29,11 +28,19 @@ Route::group(array('prefix' => 'account'), function() {
 });
 
 Route::group(array('prefix' => 'admin'), function() {
-	Route::get('/category', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));	
+	Route::get('/category/{id?}', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));	
+	Route::get('/category-form/{id?}', array('as' => 'admin.category.form', 'before' => 'auth', 'uses' => 'CategoryController@getForm'));	
+	Route::post('/category', array('as' => 'admin.add-category', 'before' => 'auth', 'uses' => 'CategoryController@save'));	
+	Route::delete('/category', array('as' => 'admin.delete-category', 'before' => 'auth', 'uses' => 'CategoryController@delete'));	
+	Route::post('/get-categories', array('as' => 'admin.get-categories', 'before' => 'auth', 'uses' => 'CategoryController@getCategories'));	
 });
 
 Route::group(array('prefix' => 'advert'), function() {
 	Route::get('/create.html', array('as'=>'advert.create', 'uses' => 'AdvertController@create'));
+});
+
+Route::group(array('prefix' => 'app'), function() {
+	Route::get('/settings/{name?}', array('as' => 'app.settings', 'before' => 'ajax', 'uses' => 'ApplicationController@settings'));
 });
 
 // 	// main page for the admin section (app/views/admin/dashboard.blade.php)

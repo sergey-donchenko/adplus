@@ -5776,7 +5776,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   line-height: 1.3;
 }
 
-.panel {
+.panel, .category-panel .tab-panel {
   margin-bottom: 20px;
   background-color: #fff;
   border: 1px solid transparent;
@@ -5828,23 +5828,27 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   border-bottom-left-radius: 3px;
 }
 
-.panel > .list-group,
-.panel > .panel-collapse > .list-group {
+.panel > .list-group, .category-panel .tab-panel > .list-group,
+.panel > .panel-collapse > .list-group,
+.category-panel .tab-panel > .panel-collapse > .list-group {
   margin-bottom: 0;
 }
-.panel > .list-group .list-group-item,
-.panel > .panel-collapse > .list-group .list-group-item {
+.panel > .list-group .list-group-item, .category-panel .tab-panel > .list-group .list-group-item,
+.panel > .panel-collapse > .list-group .list-group-item,
+.category-panel .tab-panel > .panel-collapse > .list-group .list-group-item {
   border-width: 1px 0;
   border-radius: 0;
 }
-.panel > .list-group:first-child .list-group-item:first-child,
-.panel > .panel-collapse > .list-group:first-child .list-group-item:first-child {
+.panel > .list-group:first-child .list-group-item:first-child, .category-panel .tab-panel > .list-group:first-child .list-group-item:first-child,
+.panel > .panel-collapse > .list-group:first-child .list-group-item:first-child,
+.category-panel .tab-panel > .panel-collapse > .list-group:first-child .list-group-item:first-child {
   border-top: 0;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
-.panel > .list-group:last-child .list-group-item:last-child,
-.panel > .panel-collapse > .list-group:last-child .list-group-item:last-child {
+.panel > .list-group:last-child .list-group-item:last-child, .category-panel .tab-panel > .list-group:last-child .list-group-item:last-child,
+.panel > .panel-collapse > .list-group:last-child .list-group-item:last-child,
+.category-panel .tab-panel > .panel-collapse > .list-group:last-child .list-group-item:last-child {
   border-bottom: 0;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -5858,144 +5862,225 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   border-top-width: 0;
 }
 
-.panel > .table,
+.panel > .table, .category-panel .tab-panel > .table,
 .panel > .table-responsive > .table,
-.panel > .panel-collapse > .table {
+.category-panel .tab-panel > .table-responsive > .table,
+.panel > .panel-collapse > .table,
+.category-panel .tab-panel > .panel-collapse > .table {
   margin-bottom: 0;
 }
-.panel > .table caption,
+.panel > .table caption, .category-panel .tab-panel > .table caption,
 .panel > .table-responsive > .table caption,
-.panel > .panel-collapse > .table caption {
+.category-panel .tab-panel > .table-responsive > .table caption,
+.panel > .panel-collapse > .table caption,
+.category-panel .tab-panel > .panel-collapse > .table caption {
   padding-left: 15px;
   padding-right: 15px;
 }
-.panel > .table:first-child,
-.panel > .table-responsive:first-child > .table:first-child {
+.panel > .table:first-child, .category-panel .tab-panel > .table:first-child,
+.panel > .table-responsive:first-child > .table:first-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
-.panel > .table:first-child > thead:first-child > tr:first-child,
+.panel > .table:first-child > thead:first-child > tr:first-child, .category-panel .tab-panel > .table:first-child > thead:first-child > tr:first-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child,
+.category-panel .tab-panel > .table:first-child > tbody:first-child > tr:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child,
-.panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child {
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child,
+.panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
-.panel > .table:first-child > thead:first-child > tr:first-child td:first-child,
+.panel > .table:first-child > thead:first-child > tr:first-child td:first-child, .category-panel .tab-panel > .table:first-child > thead:first-child > tr:first-child td:first-child,
 .panel > .table:first-child > thead:first-child > tr:first-child th:first-child,
+.category-panel .tab-panel > .table:first-child > thead:first-child > tr:first-child th:first-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+.category-panel .tab-panel > .table:first-child > tbody:first-child > tr:first-child td:first-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+.category-panel .tab-panel > .table:first-child > tbody:first-child > tr:first-child th:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
-.panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+.panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
   border-top-left-radius: 3px;
 }
-.panel > .table:first-child > thead:first-child > tr:first-child td:last-child,
+.panel > .table:first-child > thead:first-child > tr:first-child td:last-child, .category-panel .tab-panel > .table:first-child > thead:first-child > tr:first-child td:last-child,
 .panel > .table:first-child > thead:first-child > tr:first-child th:last-child,
+.category-panel .tab-panel > .table:first-child > thead:first-child > tr:first-child th:last-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+.category-panel .tab-panel > .table:first-child > tbody:first-child > tr:first-child td:last-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+.category-panel .tab-panel > .table:first-child > tbody:first-child > tr:first-child th:last-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
-.panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+.panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+.category-panel .tab-panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
   border-top-right-radius: 3px;
 }
-.panel > .table:last-child,
-.panel > .table-responsive:last-child > .table:last-child {
+.panel > .table:last-child, .category-panel .tab-panel > .table:last-child,
+.panel > .table-responsive:last-child > .table:last-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
-.panel > .table:last-child > tbody:last-child > tr:last-child,
+.panel > .table:last-child > tbody:last-child > tr:last-child, .category-panel .tab-panel > .table:last-child > tbody:last-child > tr:last-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child,
+.category-panel .tab-panel > .table:last-child > tfoot:last-child > tr:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child,
-.panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child {
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child,
+.panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-.panel > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+.panel > .table:last-child > tbody:last-child > tr:last-child td:first-child, .category-panel .tab-panel > .table:last-child > tbody:last-child > tr:last-child td:first-child,
 .panel > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+.category-panel .tab-panel > .table:last-child > tbody:last-child > tr:last-child th:first-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+.category-panel .tab-panel > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+.category-panel .tab-panel > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
-.panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+.panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
   border-bottom-left-radius: 3px;
 }
-.panel > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+.panel > .table:last-child > tbody:last-child > tr:last-child td:last-child, .category-panel .tab-panel > .table:last-child > tbody:last-child > tr:last-child td:last-child,
 .panel > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+.category-panel .tab-panel > .table:last-child > tbody:last-child > tr:last-child th:last-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+.category-panel .tab-panel > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
 .panel > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+.category-panel .tab-panel > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
-.panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+.panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+.category-panel .tab-panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
   border-bottom-right-radius: 3px;
 }
-.panel > .panel-body + .table,
+.panel > .panel-body + .table, .category-panel .tab-panel > .panel-body + .table,
 .panel > .panel-body + .table-responsive,
+.category-panel .tab-panel > .panel-body + .table-responsive,
 .panel > .table + .panel-body,
-.panel > .table-responsive + .panel-body {
+.category-panel .tab-panel > .table + .panel-body,
+.panel > .table-responsive + .panel-body,
+.category-panel .tab-panel > .table-responsive + .panel-body {
   border-top: 1px solid #ddd;
 }
-.panel > .table > tbody:first-child > tr:first-child th,
-.panel > .table > tbody:first-child > tr:first-child td {
+.panel > .table > tbody:first-child > tr:first-child th, .category-panel .tab-panel > .table > tbody:first-child > tr:first-child th,
+.panel > .table > tbody:first-child > tr:first-child td,
+.category-panel .tab-panel > .table > tbody:first-child > tr:first-child td {
   border-top: 0;
 }
-.panel > .table-bordered,
-.panel > .table-responsive > .table-bordered {
+.panel > .table-bordered, .category-panel .tab-panel > .table-bordered,
+.panel > .table-responsive > .table-bordered,
+.category-panel .tab-panel > .table-responsive > .table-bordered {
   border: 0;
 }
-.panel > .table-bordered > thead > tr > th:first-child,
+.panel > .table-bordered > thead > tr > th:first-child, .category-panel .tab-panel > .table-bordered > thead > tr > th:first-child,
 .panel > .table-bordered > thead > tr > td:first-child,
+.category-panel .tab-panel > .table-bordered > thead > tr > td:first-child,
 .panel > .table-bordered > tbody > tr > th:first-child,
+.category-panel .tab-panel > .table-bordered > tbody > tr > th:first-child,
 .panel > .table-bordered > tbody > tr > td:first-child,
+.category-panel .tab-panel > .table-bordered > tbody > tr > td:first-child,
 .panel > .table-bordered > tfoot > tr > th:first-child,
+.category-panel .tab-panel > .table-bordered > tfoot > tr > th:first-child,
 .panel > .table-bordered > tfoot > tr > td:first-child,
+.category-panel .tab-panel > .table-bordered > tfoot > tr > td:first-child,
 .panel > .table-responsive > .table-bordered > thead > tr > th:first-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > thead > tr > th:first-child,
 .panel > .table-responsive > .table-bordered > thead > tr > td:first-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > thead > tr > td:first-child,
 .panel > .table-responsive > .table-bordered > tbody > tr > th:first-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr > th:first-child,
 .panel > .table-responsive > .table-bordered > tbody > tr > td:first-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr > td:first-child,
 .panel > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
-.panel > .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+.category-panel .tab-panel > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+.panel > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tfoot > tr > td:first-child {
   border-left: 0;
 }
-.panel > .table-bordered > thead > tr > th:last-child,
+.panel > .table-bordered > thead > tr > th:last-child, .category-panel .tab-panel > .table-bordered > thead > tr > th:last-child,
 .panel > .table-bordered > thead > tr > td:last-child,
+.category-panel .tab-panel > .table-bordered > thead > tr > td:last-child,
 .panel > .table-bordered > tbody > tr > th:last-child,
+.category-panel .tab-panel > .table-bordered > tbody > tr > th:last-child,
 .panel > .table-bordered > tbody > tr > td:last-child,
+.category-panel .tab-panel > .table-bordered > tbody > tr > td:last-child,
 .panel > .table-bordered > tfoot > tr > th:last-child,
+.category-panel .tab-panel > .table-bordered > tfoot > tr > th:last-child,
 .panel > .table-bordered > tfoot > tr > td:last-child,
+.category-panel .tab-panel > .table-bordered > tfoot > tr > td:last-child,
 .panel > .table-responsive > .table-bordered > thead > tr > th:last-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > thead > tr > th:last-child,
 .panel > .table-responsive > .table-bordered > thead > tr > td:last-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > thead > tr > td:last-child,
 .panel > .table-responsive > .table-bordered > tbody > tr > th:last-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr > th:last-child,
 .panel > .table-responsive > .table-bordered > tbody > tr > td:last-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr > td:last-child,
 .panel > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
-.panel > .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+.category-panel .tab-panel > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+.panel > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tfoot > tr > td:last-child {
   border-right: 0;
 }
-.panel > .table-bordered > thead > tr:first-child > td,
+.panel > .table-bordered > thead > tr:first-child > td, .category-panel .tab-panel > .table-bordered > thead > tr:first-child > td,
 .panel > .table-bordered > thead > tr:first-child > th,
+.category-panel .tab-panel > .table-bordered > thead > tr:first-child > th,
 .panel > .table-bordered > tbody > tr:first-child > td,
+.category-panel .tab-panel > .table-bordered > tbody > tr:first-child > td,
 .panel > .table-bordered > tbody > tr:first-child > th,
+.category-panel .tab-panel > .table-bordered > tbody > tr:first-child > th,
 .panel > .table-responsive > .table-bordered > thead > tr:first-child > td,
+.category-panel .tab-panel > .table-responsive > .table-bordered > thead > tr:first-child > td,
 .panel > .table-responsive > .table-bordered > thead > tr:first-child > th,
+.category-panel .tab-panel > .table-responsive > .table-bordered > thead > tr:first-child > th,
 .panel > .table-responsive > .table-bordered > tbody > tr:first-child > td,
-.panel > .table-responsive > .table-bordered > tbody > tr:first-child > th {
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr:first-child > td,
+.panel > .table-responsive > .table-bordered > tbody > tr:first-child > th,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr:first-child > th {
   border-bottom: 0;
 }
-.panel > .table-bordered > tbody > tr:last-child > td,
+.panel > .table-bordered > tbody > tr:last-child > td, .category-panel .tab-panel > .table-bordered > tbody > tr:last-child > td,
 .panel > .table-bordered > tbody > tr:last-child > th,
+.category-panel .tab-panel > .table-bordered > tbody > tr:last-child > th,
 .panel > .table-bordered > tfoot > tr:last-child > td,
+.category-panel .tab-panel > .table-bordered > tfoot > tr:last-child > td,
 .panel > .table-bordered > tfoot > tr:last-child > th,
+.category-panel .tab-panel > .table-bordered > tfoot > tr:last-child > th,
 .panel > .table-responsive > .table-bordered > tbody > tr:last-child > td,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr:last-child > td,
 .panel > .table-responsive > .table-bordered > tbody > tr:last-child > th,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tbody > tr:last-child > th,
 .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
-.panel > .table-responsive > .table-bordered > tfoot > tr:last-child > th {
+.category-panel .tab-panel > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
+.panel > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+.category-panel .tab-panel > .table-responsive > .table-bordered > tfoot > tr:last-child > th {
   border-bottom: 0;
 }
-.panel > .table-responsive {
+.panel > .table-responsive, .category-panel .tab-panel > .table-responsive {
   border: 0;
   margin-bottom: 0;
 }
@@ -6003,11 +6088,11 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel-group {
   margin-bottom: 20px;
 }
-.panel-group .panel {
+.panel-group .panel, .panel-group .category-panel .tab-panel, .category-panel .panel-group .tab-panel {
   margin-bottom: 0;
   border-radius: 4px;
 }
-.panel-group .panel + .panel {
+.panel-group .panel + .panel, .panel-group .category-panel .tab-panel + .panel, .category-panel .panel-group .tab-panel + .panel, .panel-group .category-panel .panel + .tab-panel, .category-panel .panel-group .panel + .tab-panel, .panel-group .category-panel .tab-panel + .tab-panel, .category-panel .panel-group .tab-panel + .tab-panel {
   margin-top: 5px;
 }
 .panel-group .panel-heading {
@@ -9354,7 +9439,7 @@ h3 {
   line-height: 20px;
 }
 
-.panel h3 {
+.panel h3, .category-panel .tab-panel h3 {
   margin: 0;
 }
 
@@ -9415,12 +9500,50 @@ h3 {
   font-size: 12px;
 }
 
+.nav-tabs {
+  margin-bottom: 20px;
+}
 .nav-tabs > li .active > a {
   background: #F7F7F7;
 }
 
 .navbar-default {
   border: none;
+}
+
+.icon-head {
+  min-height: 18px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  padding-left: 22px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
 }
 
 /* logo */
@@ -9974,6 +10097,87 @@ p.muted {
 .error .controls .form-control {
   border: 1px solid #a94442 !important;
   color: #a94442 !important;
+}
+
+.errors li {
+  list-style-type: none;
+}
+
+.category-panel {
+  /*padding: 45px 15px 15px;*/
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-radius: 0px;
+  border-width: 2px;
+  box-shadow: none;
+  padding-left: 10px;
+}
+.category-panel > .panel-heading {
+  background-color: #fff;
+  border-bottom: 4px solid #dfdfdf;
+  margin-bottom: 18px;
+  padding-bottom: .25em;
+}
+.category-panel > .panel-body, .category-panel > .panel-heading {
+  padding-left: 0;
+}
+.category-panel .tab-panel {
+  /*border-color: #ddd;*/
+}
+
+.easytree-container {
+  border: none !important;
+}
+
+.head-categories {
+  background-image: url(../images/fam_folder_database.gif);
+  padding-left: 20px;
+  color: #253033 !important;
+}
+
+.button-panel {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.button-panel button {
+  margin-bottom: 5px;
+}
+
+.category-tree-sidebar .btn {
+  text-transform: none;
+}
+
+.add-category-btn,
+.add-sub-category-btn {
+  color: #3c763d;
+}
+
+.delete-active-category-btn {
+  color: #a94442;
+}
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 600px) {
+  .col-sm-3 .row {
+    background: #eeeeee;
+    margin-left: inherit;
+    margin-right: inherit;
+    padding: 10px;
+  }
+}
+.display-status {
+  display: block;
+  padding-right: 15px;
+  cursor: pointer;
+}
+.display-status .glyphicon-eye-open {
+  color: #5cb85c;
+}
+.display-status .glyphicon-eye-close {
+  color: #d9534f;
 }
 
 /*******************************************

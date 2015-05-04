@@ -16,6 +16,22 @@ module.exports = function(grunt) {
 		          ' */\n'
 		},
 
+		react: {
+		    files: './app/assets/javascript/react_components/*.jsx',
+		    tasks: ['browserify']
+		},
+
+		browserify: {
+			options: {
+		        transform: [ require('grunt-react').browserify ]
+		    },
+		    
+		    client: {
+		        src: ['./app/assets/javascript/react_components/**/*.jsx'],
+		        dest: './public/js/app.built.js'
+		    }
+		},
+
         concat: {
         	options: {
 		        separator: ';',
@@ -29,6 +45,8 @@ module.exports = function(grunt) {
 		    dist: {
 		        src: [	
 		            './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+		            './app/assets/javascript/components/Application.js', // Init the application
+		            './app/assets/javascript/components/**/*.js',
 		            './app/assets/javascript/frontend.js'
 		        ],
 		        dest: './public/js/frontend.js',
@@ -63,6 +81,11 @@ module.exports = function(grunt) {
 			        src: ['jquery.min.js'],
 			        dest: './public/js/jquery'
 			    }, {
+			        expand: true,
+			        cwd: './bower_components/jquery/dist/',
+			        src: ['jquery.min.map'],
+			        dest: './public/js/jquery'
+			    }, {
 			    	expand: true,
 			        cwd: './bower_components/regula/dist/',
 			        src: ['regula-1.3.4.min.js'],
@@ -84,9 +107,22 @@ module.exports = function(grunt) {
 			        dest: './public/js/'
 			    }, {
 			    	expand: true,
+			        cwd: './app/assets/javascript/',
+			        src: ['admin.js'],
+			        dest: './public/js/'
+			    }, {
+			    	expand: true,
 			        cwd: './app/assets/stylesheets/',
-			        src: ['easyTree.css'],
-			        dest: './public/css/'
+			        src: ['ui.easytree.css'],
+			        dest: './public/css/',
+			        rename: function(dest, src) {
+		                return dest + 'ui-easytree.css';
+		            }
+			    }, {
+			    	expand: true,
+			        cwd: './app/assets/stylesheets/skin-win8/',
+			        src: ['**'],
+			        dest: './public/images/tree-icons/'
 			    }]
         	}
         },
@@ -119,6 +155,7 @@ module.exports = function(grunt) {
 		        files: {
 		          './public/js/frontend.js': './public/js/frontend.js',
 		          './public/js/easyTree.min.js': './public/js/easyTree.js',
+		          './public/js/admin.min.js': './public/js/admin.js',
 		        }
 		    }
         },
@@ -154,9 +191,11 @@ module.exports = function(grunt) {
 		            //watched files
 		            './bower_components/jquery/dist/jquery.js',
 		            './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
-		            './app/assets/javascript/frontend.js'
+		            './app/assets/javascript/components/*.js',
+		            './app/assets/javascript/frontend.js',		            
+		            './app/assets/javascript/admin.js',
 		            ],   
-		        tasks: ['concat:dist','uglify:dist'],     //tasks to run
+		        tasks: ['concat:dist', 'copy','uglify:dist'],     //tasks to run
 		        options: {
 		            livereload: true                      //reloads the browser
 		        }
@@ -164,11 +203,16 @@ module.exports = function(grunt) {
 
         	sass : {
         		files: ['./app/assets/stylesheets/*.scss'],  //watched files
-		        tasks: ['sass:dev'],                          //tasks to run
+		        tasks: ['sass:dev', 'cssmin'],                          //tasks to run
 		        options: {
 		            livereload: true                        //reloads the browser
 		        }
         	},
+
+        	react: {
+		        files: './app/assets/javascript/react_components/*.jsx',
+		        tasks: ['browserify']
+		    },
 
         	tests: {
 		        files: ['app/controllers/*.php', 'app/models/*.php'],  //the task will run only when you save files in this location
@@ -188,5 +232,5 @@ module.exports = function(grunt) {
 
  	// Task definition
  	grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['copy', 'sass:dist', 'concat:dist', 'uglify:dist', 'cssmin', 'phpunit']);
+    grunt.registerTask('build', ['copy', 'sass:dist', 'concat:dist', 'uglify:dist', 'cssmin', 'clean', 'phpunit']);
 };        

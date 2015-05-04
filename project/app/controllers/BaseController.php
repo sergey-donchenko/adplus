@@ -17,6 +17,16 @@ class BaseController extends Controller {
      * List of the titles
     */
     protected $aTitle = array();
+
+    /**
+     * $_aResponse  
+    */
+    protected $_aResponse = array(
+        'status' => false,
+        'data' => array(),
+        'html' => '',
+        'msg' => '',
+    );
     
     /**
      * Init the config Tempalte  
