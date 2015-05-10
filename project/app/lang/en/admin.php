@@ -1,7 +1,8 @@
 <?php
 	return array(
 		'nav' => array(
-			'category' => 'Category'
+			'category' => 'Category',
+			'settings' => 'Settings',
 		)
 	);
 ?>	

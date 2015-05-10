@@ -85,6 +85,30 @@ var adPlusExchange = (function() {
                 }
             },
 
+            /**
+             * Handle the Modules in the system
+             *
+            */
+            Module: {
+                /**
+                 * Retrieve the module by its name
+                 *
+                 * @param <string> module - name of a module for retrieving...
+                 *
+                 * @return <object>
+                */    
+                get : function( module ) {
+                    if ( window.hasOwnProperty(module) ) {
+                        return window[module];
+                    }
+
+                    return {
+                        init: function() {
+                            console.log('Module "' + module + '" was not found in the system!');
+                        }
+                    }
+                }
+            },
 
             /**
              * Form validation

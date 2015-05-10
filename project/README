@@ -9,3 +9,36 @@
 
 3. Once the new Controller was added we need to clear the route cache by executing the following command:
 	sudo composer dumpautoload
+
+4. Extrnal modules taht I use:
+   4.1: Phone validator: https://github.com/Propaganistas/Laravel-Phone
+   4.2: Country List: https://github.com/Monarobase/country-list
+
+
+5. Install Imagick
+	
+For all to those having problems with this i did this tutorial:
+How to install Imagemagick and Php module Imagick on ubuntu?
+i did this 7 simple steps:
+Update libraries, and packages
+
+apt-get update
+Remove obsolete things
+
+apt-get autoremove
+For the libraries of ImageMagick
+
+apt-get install libmagickwand-dev
+for the core class Imagick
+
+apt-get install imagemagick
+
+For create the binaries, and conections in beetween
+pecl install imagick (sudo apt-get install php-pear php5-dev if pecl will not be found)
+
+Append the extension to your php.ini
+
+echo "extension=imagick.so" >> /etc/php5/apache2/php.ini
+Restart Apache
+
+service apache2 restart   

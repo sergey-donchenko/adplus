@@ -28,6 +28,9 @@ Route::group(array('prefix' => 'account'), function() {
 });
 
 Route::group(array('prefix' => 'admin'), function() {
+	Route::get('/settings/{tab?}', array('as' => 'admin.settings', 'before' => 'auth', 'uses' => 'SettingsController@edit'));	
+	Route::post('/settings', array('as' => 'admin.save-settings', 'before' => 'auth', 'uses' => 'SettingsController@save'));	
+	
 	Route::get('/category/{id?}', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));	
 	Route::get('/category-form/{id?}', array('as' => 'admin.category.form', 'before' => 'auth', 'uses' => 'CategoryController@getForm'));	
 	Route::post('/category', array('as' => 'admin.add-category', 'before' => 'auth', 'uses' => 'CategoryController@save'));	
@@ -36,11 +39,17 @@ Route::group(array('prefix' => 'admin'), function() {
 });
 
 Route::group(array('prefix' => 'advert'), function() {
-	Route::get('/create.html', array('as'=>'advert.create', 'uses' => 'AdvertController@create'));
+	Route::get('/create.html', array('as'=>'advert.create', 'uses' => 'AdvertController@index'));
+	Route::post('/create', array('as'=>'advert.create.new', 'uses' => 'AdvertController@create'));
+});
+
+Route::group(array('prefix' => 'category'), function() {
+	Route::get('/chooser', array('as'=>'category.chooser', 'uses' => 'CategoryController@getCategoryChooser'));
 });
 
 Route::group(array('prefix' => 'app'), function() {
 	Route::get('/settings/{name?}', array('as' => 'app.settings', 'before' => 'ajax', 'uses' => 'ApplicationController@settings'));
+	Route::get('/image/{type}/{size}/{filename}', array('as' => 'app.image', 'uses' => 'ImageController@getImage'));
 });
 
 // 	// main page for the admin section (app/views/admin/dashboard.blade.php)

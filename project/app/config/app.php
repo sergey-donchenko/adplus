@@ -121,6 +121,12 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+		
+		// External modules
+		'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider',
+		'Monarobase\CountryList\CountryListServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
+		// 'App\Services\Img'
 
 	),
 
@@ -188,6 +194,11 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
+
+		//Custom alias
+		'Countries' 		=> 'Monarobase\CountryList\CountryListFacade',
+		'Image' 			=> 'Intervention\Image\Facades\Image',
+		'Img' 				=> 'App\Facades\ImageFacade',
 
 	),
 

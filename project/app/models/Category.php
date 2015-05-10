@@ -7,6 +7,11 @@ class Category extends Eloquent {
 	use SoftDeletingTrait;
 
 	/**
+	 * 
+	*/
+	const STORAGE_PREFIX = 'category';
+
+	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
@@ -23,9 +28,11 @@ class Category extends Eloquent {
 	/**
 	 * Return a list of Categories by the parent identifier
 	 *
-	 * @parent (int) $iParentId - 
+	 * @parent (int) $iParentId - parent identifier 
+	 *
+	 * @return (data set) 
 	*/
-	public function getCategoriesByParentId( $iParentId )
+	public function getCategoriesByParentId( $iParentId = 0 )
 	{
 		return self::where('parent_id', '=', $iParentId)
 			->orderBy('name', 'asc')

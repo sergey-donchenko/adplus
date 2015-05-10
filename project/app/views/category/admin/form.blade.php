@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="panel-body">
-		{{ Form::open( array( 'url' => '/admin/category', 'enctype' => 'multipart/form-data', 'id' => 'frmCategory' )) }}
+		{{ Form::open( array( 'url' => '/admin/category', 'enctype' => 'multipart/form-data', 'files' => true, 'id' => 'frmCategory' )) }}
 		<!-- if there are creation errors, they will show here -->
 		{{ HTML::ul($errors->all(), array('class'=>'errors alert alert-danger') ) }}
 
@@ -53,14 +53,20 @@
 		            </div>
 
 		            <div class="col-sm-12">
-		               	<br >		                        	
+		               	<br >		
 		               	{{ Form::label('category_icon', 'Icon', array('class' => 'awesome')) }}
-		               	{{ Form::file('category_icon', '', array('class' => 'form-control col-sm-8')) }}		                        	
+		               	@if (isset($aCategory['icon_image']) && !empty($aCategory['icon_image']))
+		               	<br />{{ HTML::image( '/app/image/category/60,60/' . $aCategory['icon_image']) }}
+		               	@endif
+		               	{{ Form::file('category_icon', '', array('class' => 'form-control col-sm-8')) }}
 		            </div>
 
 		            <div class="col-sm-12">
 		               	<br >		                        	
 		               	{{ Form::label('category_cover', 'Cover', array('class' => 'awesome')) }}
+		               	@if (isset($aCategory['cover_image']) && !empty($aCategory['cover_image']))
+		               	<div style="background:url(<?php echo '/app/image/category/0,0/' . $aCategory['cover_image'] ?>) no-repeat center top scroll;background-size: 100% auto;padding-bottom:40%;"></div>
+		               	@endif
 		               	{{ Form::file('category_cover', '', array('class' => 'form-control col-sm-8')) }}		                        	
 		            </div>
 

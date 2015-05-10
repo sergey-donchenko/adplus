@@ -68,6 +68,7 @@
                                     </a>    
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                                         <li role="presentation" class="header-of-menu"><strong>Administration</strong></li>
+                                        <li><a href="{{ URL::route('admin.settings') }}"><?php echo Lang::get('admin.nav.settings'); ?></a></li>
                                         <li><a href="{{ URL::route('admin.category') }}"><?php echo Lang::get('admin.nav.category'); ?></a></li>
                                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
 
@@ -114,8 +115,6 @@
         
         <!-- Modal box: Forgot form -->
         @include('popups.notification')
-
-
 
         <!-- Bottom container section -->
         @section('bottom-container')

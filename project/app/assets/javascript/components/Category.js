@@ -1,5 +1,9 @@
 var modCategory = (function ( $, adPlus ) {
-	var sCategoryTreeSelector        = '.category-tree',
+	var _config = {
+			modal: null // refference to the Modal module
+		},
+
+		sCategoryTreeSelector        = '.category-tree',
 		sCategoryFormWrapperSelector = '#categoryFormWrapper',
 		sCategoryFormSelector        = '#frmCategory',
 		sAddCategoryButton           = '.add-category-btn',
@@ -108,6 +112,30 @@ var modCategory = (function ( $, adPlus ) {
 
 		setTreeInstance: function( ins ){
 			this.treeInstance = ins;
+
+			return this;
+		},
+
+		/**
+		 * Show the Choose Popup
+		 *
+		*/
+		selectDialog: function( params ) {
+			if ( _config.modal === null ) {
+				_config.modal = adPlus.getInstance().Module.get('modModal');
+			}
+
+			_config.modal.init( $.extend( { url: '/category/chooser' }, params ) ).show();
+
+		},
+
+		/**
+		 * Init the module
+		*/
+		init: function( params ) {
+			if ( params ) {
+            	_config = $.extend( _config, params );
+			}
 
 			return this;
 		},

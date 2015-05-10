@@ -8,9 +8,7 @@ class AdvertController extends \BaseController {
 	 */
 	public function index()
 	{
-		// $aAdverts = array();
-
-		// return View::make('listing.index', array('adverts' => $aAdverts));
+		return View::make('advert.create', array());
 	}
 
 
@@ -21,8 +19,8 @@ class AdvertController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
-		return View::make('advert.create', array());
+		die('Hello dear!!!');
+		
 	}
 
 

@@ -155,4 +155,15 @@ jQuery(function() {
 
         jQuery.plot( jQuery(css_id), data, options);
     }
+
+    // Handle the Advert ADD / EDIT form
+    if ( jQuery('#frmAdvert').length > 0 ) {
+        var advert = adPlusExchange.getInstance().Module.get('modAdvert');
+
+        if ( advert ) {            
+            advert.init({
+                initForm: true
+            });
+        }
+    }
 });

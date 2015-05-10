@@ -47,6 +47,17 @@ class CategoryController extends \BaseController {
 	}
 
 	/**
+	 * Return HTML for the Category chooser
+	 * 
+	*/
+	public function getCategoryChooser()
+	{
+		$oCategory = new Category();
+	        	
+		return View::make( 'category.chooser', array('aCategories' => $oCategory->getCategoriesByParentId() ) );
+	}
+
+	/**
 	 * Return a list of categories by the parent identifier
 	*/
 	public function getCategories()
@@ -132,6 +143,9 @@ class CategoryController extends \BaseController {
 		if( $validator->passes() ) {			
 			$iId       = Input::get('category_id');
 			$iParentId = Input::get('parent_id');
+			$sCatIcon  = Input::file('category_icon');
+			$sCatCover = Input::file('category_cover');
+			$sStrgPth  = Config::get('storage.image') . '/' . Category::STORAGE_PREFIX;
 			$sPath     = '';
 
 			if ( $iId ) {
@@ -140,13 +154,31 @@ class CategoryController extends \BaseController {
 				$cat = new Category();
 			}
 
+			if ( $sCatIcon ) {
+				if ( $cat->icon_image && file_exists( $sStrgPth . '/' . $cat->icon_image )) {
+					File::delete( $sStrgPth . '/' . $cat->icon_image );
+				}
+
+				$cat->icon_image = md5( $sCatIcon->getClientOriginalName() ) . '.' . $sCatIcon->getClientOriginalExtension();
+				$sCatIcon->move( $sStrgPth , $cat->icon_image );				 
+			}
+
+			if ( $sCatCover ) {
+				if ( $cat->cover_image && file_exists( $sStrgPth . '/' . $cat->cover_image )) {
+					File::delete( $sStrgPth . '/' . $cat->cover_image );
+				}
+
+				$cat->cover_image = md5( $sCatCover->getClientOriginalName() ) . '.' . $sCatCover->getClientOriginalExtension();
+				$sCatCover->move( $sStrgPth , $cat->cover_image );	
+			}
+
 			$cat->name               = Input::get('category_name');
 			$cat->short_description  = Input::get('category_descr');
 			$cat->page_title         = Input::get('category_page_title');
 			$cat->meta_keywords      = Input::get('category_meta_keywords');
 			$cat->meta_description   = Input::get('category_meta_descr');
 			$cat->parent_id          = $iParentId;
-			$cat->is_active          = Input::get('category_is_active');
+			$cat->is_active          = Input::get('category_is_active');			
 				
 			if ( $iParentId && $catParent = Category::find( $iParentId ) ) {
 				$sPath = $catParent->path . '/' . $iParentId;	
@@ -174,8 +206,6 @@ class CategoryController extends \BaseController {
 
             return Redirect::route('admin.category', array('id' => $cat->id));
 		}			
-
-		die('Just for test!!!');
 	}
 
 
