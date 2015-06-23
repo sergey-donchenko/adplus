@@ -8,6 +8,7 @@ var modCategory = (function ( $, adPlus ) {
 		sCategoryFormSelector        = '#frmCategory',
 		sAddCategoryButton           = '.add-category-btn',
 		sAddSubCategoryButton        = '.add-sub-category-btn',
+		sCategorySelectorBreadcrumb  = '#categoryBreadcrumb',
 		oCategoryTreeInstance        = null,		
 		aCategories                  = {},
 		_sCategoryRootId             = null,
@@ -125,7 +126,33 @@ var modCategory = (function ( $, adPlus ) {
 				_config.modal = adPlus.getInstance().Module.get('modModal');
 			}
 
-			_config.modal.init( $.extend( { url: '/category/chooser' }, params ) ).show();
+			_config.modal.init( $.extend( { 
+					title: 'Select a Category', 
+					url: '/category/chooser',
+					onclick: function( e ) {
+						var target = e.target,
+							breadcrumb = $(sCategorySelectorBreadcrumb);
+
+						e.preventDefault();
+
+						if ( target.classList.contains('hasChildren') ) {
+							console.log('THis node has some chgildren elements...');
+
+						} else if ( target.classList.contains('selectable') ) {
+							console.log('THis node CAN be selected!', e);
+							if ( breadcrumb ) {
+								breadcrumb.find('span.loading-icon').remove();
+								breadcrumb.append('<li><a href="/user/messages">' +  target.innerText + ' <span class="loading-icon">&nbsp;</span></a></li>');
+							}
+						}
+						
+
+
+						return false;
+					},
+
+
+				}, params ) ).show();
 
 		},
 

@@ -52,9 +52,10 @@ class CategoryController extends \BaseController {
 	*/
 	public function getCategoryChooser()
 	{
-		$oCategory = new Category();
-	        	
-		return View::make( 'category.chooser', array('aCategories' => $oCategory->getCategoriesByParentId() ) );
+		$oCategory   = new Category();	        	
+	    $aCategories = $oCategory->getCategoriesByParentId(0, array('is_active' => '1'), true);
+	       
+		return View::make( 'category.chooser', array('aCategories' => $aCategories ) );
 	}
 
 	/**
@@ -116,17 +117,6 @@ class CategoryController extends \BaseController {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-
-	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @return Response
@@ -177,6 +167,7 @@ class CategoryController extends \BaseController {
 			$cat->page_title         = Input::get('category_page_title');
 			$cat->meta_keywords      = Input::get('category_meta_keywords');
 			$cat->meta_description   = Input::get('category_meta_descr');
+			$cat->position           = Input::get('category_position');
 			$cat->parent_id          = $iParentId;
 			$cat->is_active          = Input::get('category_is_active');			
 				
@@ -193,7 +184,7 @@ class CategoryController extends \BaseController {
 			$iCatId = $cat->save();					
 
 			// Update child count for the parent Category
-			if ( $iParentId ) {				
+			if ( $iParentId > 0 ) {
 				$iCnt = count($catParent->getCategoriesByParentId( $iParentId ));
 
 				$catParent->children_count = $iCnt;
@@ -206,42 +197,6 @@ class CategoryController extends \BaseController {
 
             return Redirect::route('admin.category', array('id' => $cat->id));
 		}			
-	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
 	}
 
 	/**
@@ -269,17 +224,4 @@ class CategoryController extends \BaseController {
 	    
 	    return Response::json($response);
 	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
-
 }

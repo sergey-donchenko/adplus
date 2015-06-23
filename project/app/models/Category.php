@@ -18,9 +18,25 @@ class Category extends Eloquent {
 	 */
 	protected $table = 'categories';
 
+	/**
+	 * Re-defined default primary key value
+	 *
+	 * @var string
+	*/
 	protected $primaryKey = 'id';
 
+	/**
+	 * Custom fields
+	 *
+	 * @var array
+	*/
+	protected $appends = array('children', 'css_class');
 
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	*/
 	public static $aRules = array(
 		'category_name' => 'required|min:3'
 	);	
@@ -28,15 +44,55 @@ class Category extends Eloquent {
 	/**
 	 * Return a list of Categories by the parent identifier
 	 *
-	 * @parent (int) $iParentId - parent identifier 
+	 * @param (int) $iParentId - parent identifier 
+	 * @param (array) $aParams - set of filters to manage the outputting
+	 * @param (bool) $bWithChildOnly - get categories which have at least one child element
 	 *
 	 * @return (data set) 
 	*/
-	public function getCategoriesByParentId( $iParentId = 0 )
+	public function getCategoriesByParentId( $iParentId = 0, $aParams = array(), $bWithChildOnly = false )
 	{
-		return self::where('parent_id', '=', $iParentId)
-			->orderBy('name', 'asc')
+		$aWhere = array('parent_id' => $iParentId);
+		
+		if ( $aParams ) {
+			foreach( $aParams as $sKey => $sVal ) {
+				$aWhere[ $sKey ] = $sVal;				
+			}
+		}
+
+		
+
+		// if ( $bWithChildOnly ) {
+		// 	// $aWhere['children_count'] = 
+		// 	$result->where('children_count', '>', 0);
+		// }
+		$result = self::where( $aWhere )
+			->orderBy( 'position', 'asc') 
+			->orderBy( 'name', 'asc') 				
 			->get();
+
+		// $result->orderBy('name', 'asc')
+		// 	->get();
+
+		return $result;	
+	}
+
+	/**
+	 * Implementation for the append item 'children'
+	 *
+	*/
+	public function getChildrenAttribute() 
+	{
+		return $this->getCategoriesByParentId( $this->id, array('is_active' => 1) );
+	}
+
+	/**
+	 * Implementation for the append item 'children'
+	 *
+	*/
+	public function getCssClassAttribute() 
+	{
+		return ($this->children_count > 0 ? 'hasChildren' : 'selectable');
 	}
 
 	/**

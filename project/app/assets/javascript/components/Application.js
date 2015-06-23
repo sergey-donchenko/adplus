@@ -104,7 +104,7 @@ var adPlusExchange = (function() {
 
                     return {
                         init: function() {
-                            console.log('Module "' + module + '" was not found in the system!');
+                            console.log('ERROR: Module "' + module + '" was not found in the system!');
                         }
                     }
                 }

@@ -87,6 +87,17 @@
 		                {{ Form::label('category_meta_descr', 'Meta Description', array('class' => 'awesome')) }}
 		                {{ Form::textarea('category_meta_descr', ($aCategory ? $aCategory['meta_description'] : ''), array('rows' => '6', 'style'=>'width: 99%; height: 114px;', 'e-height' => '114px', 'class' => 'form-control col-sm-8 expand')) }}		                        	
 		            </div>
+
+		            <div class="col-sm-12">	
+		            <br />	                            
+		                {{ Form::label('category_position', 'Position', array('class' => 'awesome')) }}
+		                <div class="col-xs-3 inputContainer">
+		                {{ Form::number('category_position', ($aCategory ? $aCategory['position'] : ''), array('placeholder' => 'Position', 'data-fv-integer-message' => 'The value is not an integer', 'class' => 'form-control')) }}
+		            	</div>
+		            </div>
+
+		            <br />
+
 		            {{ Form::hidden('category_id', ($aCategory ? $aCategory['id'] : '0') ) }}
 		            {{ Form::hidden('parent_id', ($aCategory ? $aCategory['parent_id'] : '0') ) }}
 		        </div>            
