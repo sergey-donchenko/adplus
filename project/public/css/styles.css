@@ -10217,6 +10217,22 @@ p.muted {
   font-size: 13px;
   text-decoration: none;
 }
+.category-chooser .col-sm-4.single-category {
+  width: 50% !important;
+}
+.category-chooser .col-sm-4.single-category .col-sm-3 {
+  width: 15% !important;
+}
+.category-chooser .col-sm-4.single-category .col-sm-9 {
+  width: 85% !important;
+}
+.category-chooser ol.breadcrumb li a {
+  color: #2965be;
+}
+.category-chooser ol.breadcrumb .current-category {
+  font-weight: bold;
+  color: #333;
+}
 .category-chooser ul li {
   /*@extend .img-thumbnail;
   border-color: $body-bg !important;

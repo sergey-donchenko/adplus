@@ -24,7 +24,8 @@ var modModal = (function ( $, adPlus ) {
  				'</div>'+
 			'</div>',
 		onclick: null,
-		onload: null // triggered when the content was completely finished a loading process
+		onload: null, // triggered when the content was completely finished a loading process
+		oninitialload: null
 	};
 
 	return {		
@@ -59,6 +60,10 @@ var modModal = (function ( $, adPlus ) {
 							modalBody.load( _config.url, function(data, status, e) {
 								if ( status === 'success' ) {
 									_config.history[_config.url] = data;	
+								}
+
+								if ( _config.oninitialload ) {
+									_config.oninitialload(data, status, e);
 								}
 							});
 						}
@@ -95,6 +100,14 @@ var modModal = (function ( $, adPlus ) {
 			dialog.modal();    
 
 			return this;
+		},
+
+		close: function() {
+			var dialog = $('#' + _config.id );
+			
+			dialog.modal('hide');
+
+			return this;			
 		}
 	}
 

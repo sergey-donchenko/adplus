@@ -11,10 +11,95 @@ var modCategory = (function ( $, adPlus ) {
 		sCategorySelectorBreadcrumb  = '#categoryBreadcrumb',
 		oCategoryTreeInstance        = null,		
 		aCategories                  = {},
+		aCategoryForms               = {},
 		_sCategoryRootId             = null,
 		aNestedNodes                 = [], // to handle the nested objects
 		App                          = adPlus.getInstance();
 	
+	/**
+	 * Returns the jQuery object for the Chooser body
+	 *
+	*/
+	function getChooserDialogBody()
+	{
+		return jQuery('.category-container').first();
+	}
+
+	/**
+	 * update the dialog body with content
+	*/
+	function setChooserDialogBody( categoryId ) 
+	{
+		var setDialogContent = function( content, timeout ) {
+				var breadcrumb = jQuery(sCategorySelectorBreadcrumb),
+					dialogBody = getChooserDialogBody(),
+					dfd = jQuery.Deferred();
+
+				if ( !(timeout > 0) ) {
+					timeout = 5;
+				}
+
+				dialogBody.html( 'Loading...' );
+				breadcrumb.find('li').not('#home,.home').each( function(){
+					jQuery(this).remove();
+				});
+
+				setTimeout(function(){
+					dialogBody.html( content );
+					
+					breadcrumb.find('span.loading-icon').remove();
+
+					if ( categoryId > 0 && aCategoryForms[ categoryId ] ) {
+						var data = aCategoryForms[ categoryId ]['data'],
+							parents = data['parents'] || {};					
+
+						for( var i in parents ) {											
+							breadcrumb.append('<li><span><a href="" class="hasChildren" attr-id="' + parents[i]['id'] + '">' +  parents[i]['name'] + '</a></span></li>');
+						}
+
+						breadcrumb.append('<li><span class="current-category">' +  data['name'] + '</span></li>');
+					}
+
+					dfd.resolve( dialogBody, breadcrumb);
+				}, timeout);				
+
+				return dfd.promise();
+			},		
+
+			getFormContent = function() {
+				dfd = jQuery.Deferred();
+
+				if ( categoryId && categoryId > 0 ) {
+					if ( jQuery.isEmptyObject(aCategoryForms.hasOwnProperty(categoryId)) ) {
+						App.Ajax.get('/category/category-list-items/' + categoryId).then( function( request ){
+							if ( request && request.status ) {
+								aCategoryForms[ categoryId ] = {
+									data: request.data,
+									html: request.html
+								};
+
+								dfd.resolve( aCategoryForms[ categoryId ] );
+							} else {
+								dfd.reject( request );
+							}
+						});	
+					} else {
+						dfd.resolve( aCategoryForms[ categoryId ] );
+					}
+				} else {					
+					dfd.resolve( aCategoryForms[ 'init' ] );
+				}		
+
+				return dfd.promise();
+			};
+		
+		// Draw the Category form
+		getFormContent().then( function( oContent ) {
+			setDialogContent( oContent['html'], 30 ).then(function( dialogBody, breadcrumb ) {});
+		});	
+		
+	}
+
 	/**
 	 * Update Category wrapper with HTML and delegate the events for the elements 
 	 *
@@ -39,7 +124,7 @@ var modCategory = (function ( $, adPlus ) {
 
 			// Handle the change event for the form
 			// CHANGE EVENT
-			$(sCategoryFormSelector).change(function( e ) {
+			$( sCategoryFormSelector ).change(function( e ) {
 				var target = e.target,
 					val = target.value || '0';					
 
@@ -118,42 +203,70 @@ var modCategory = (function ( $, adPlus ) {
 		},
 
 		/**
-		 * Show the Choose Popup
+		 * Show the Category Popup
 		 *
 		*/
-		selectDialog: function( params ) {
+		selectDialog: function( params, parentObject ) {
 			if ( _config.modal === null ) {
 				_config.modal = adPlus.getInstance().Module.get('modModal');
 			}
 
 			_config.modal.init( $.extend( { 
-					title: 'Select a Category', 
-					url: '/category/chooser',
-					onclick: function( e ) {
-						var target = e.target,
-							breadcrumb = $(sCategorySelectorBreadcrumb);
+				title: 'Select a Category', 
+				url: '/category/chooser',
 
-						e.preventDefault();
+				onclick: function( e ) {
+					var target = e.target,
+						selectedCategory = $('#selectedCategory'),
+						breadcrumb = $(sCategorySelectorBreadcrumb);
 
-						if ( target.classList.contains('hasChildren') ) {
-							console.log('THis node has some chgildren elements...');
+					e.preventDefault();
 
-						} else if ( target.classList.contains('selectable') ) {
-							console.log('THis node CAN be selected!', e);
-							if ( breadcrumb ) {
-								breadcrumb.find('span.loading-icon').remove();
-								breadcrumb.append('<li><a href="/user/messages">' +  target.innerText + ' <span class="loading-icon">&nbsp;</span></a></li>');
-							}
-						}
+					if ( target.classList.contains('loadInitialList') || target.classList.contains('hasChildren')) {
+						var initId = jQuery(target).attr('attr-id') || 0;
 						
+						// console.log(initId);
 
+						setChooserDialogBody( initId );
+					} else if ( target.classList.contains('selectable') ) {
+																			
+						if( jQuery(selectedCategory).length > 0 ) {
+							jQuery(selectedCategory).html(
+								'<input type="hidden" name="category_id" value="' + jQuery(e.target).attr('attr-id') + '" />' + 
+								jQuery(e.target).attr('title')
+							);
+						}
 
-						return false;
-					},
+						//Close the dialog
+						_config.modal.close();
+					}
 
+					return false;
+				},
+					
+				oninitialload: function( data, status, e) {
+					setTimeout( function(){
+						var content = getChooserDialogBody(),
+							selectedCategory = $('#selectedCategory');
 
-				}, params ) ).show();
+						if ( content ) { 
+							aCategoryForms['init'] = {
+								data: null,
+								html: jQuery(content).html()
+							};
+						}
 
+						// jQuery(selectedCategory).find('input[name="category_id"]').each(function(){
+						// 	var initId = jQuery(this).val();
+
+						// 	console.log( initId );
+
+						// 	setChooserDialogBody( initId );
+						// });						
+
+					}, 10);
+				}
+			}, params ) ).show();
 		},
 
 		/**

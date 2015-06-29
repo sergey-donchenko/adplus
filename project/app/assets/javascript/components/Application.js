@@ -111,6 +111,20 @@ var adPlusExchange = (function() {
             },
 
             /**
+             * The internal Ajax implementation
+            */
+            Ajax: {
+
+                get: function( url, params ) {
+                    return jQuery.ajax( { 'url': url } );
+                },
+
+                post: function() {
+
+                }
+            },
+
+            /**
              * Form validation
              *
              * @return (true | false) is the form valid?
@@ -258,6 +272,32 @@ var adPlusExchange = (function() {
                 }
 
                 return this;
+            },
+
+            /**
+             * 
+            */
+            loadingAffect: function( component ) {
+                if ( jQuery.isEmptyObject(component) ) {
+                    return false;
+                }
+
+                component.css({
+                    'display': 'block', 
+                    'opacity': 0.7, 
+                    'z-index': 1040,
+                    // 'background-color': '#000',
+                    'width': jQuery( component ).width(),
+                    'height': jQuery( component ).height()
+                });
+
+                jQuery(component).find('.modal-backdrop').each(function(){
+                    //
+                    jQuery(this).css({
+                        'height': jQuery( component ).height() - 100
+                    });
+                }); 
+
             }
         }
     }

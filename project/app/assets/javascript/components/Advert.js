@@ -15,9 +15,9 @@ var modAdvert = (function ( $, adPlus ) {
 	function initAdvertForm() {
 
 		// Handle the "Choose category" button
-		$('#selectCategory').click(function(e){
+		$('#selectCategory').click( function (e){
 			if ( _config.category ) {
-				_config.category.selectDialog( {} );
+				_config.category.selectDialog( {}, e );
 			}
 		});
 	}

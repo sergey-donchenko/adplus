@@ -57,9 +57,10 @@
                                 <br />
     							<div class="form-group">
     								<div class="col-sm-12">                                        
-                                        <button type="button" id="selectCategory" class="btn btn-default navbar-btn">
-                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Choose a Category
+                                        <button type="button" id="selectCategory" class="btn btn-default navbar-btn" title="Change Category">
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;...
                                         </button>
+                                        <label id="selectedCategory"></label>                                        
                                     </div>    								
     							</div>	    						
     						</div>

@@ -45,6 +45,7 @@ Route::group(array('prefix' => 'advert'), function() {
 
 Route::group(array('prefix' => 'category'), function() {
 	Route::get('/chooser', array('as'=>'category.chooser', 'uses' => 'CategoryController@getCategoryChooser'));
+	Route::get('/category-list-items/{id?}', array('as' => 'admin.category.list.item', 'uses' => 'CategoryController@getListItems'));
 });
 
 Route::group(array('prefix' => 'app'), function() {

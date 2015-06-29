@@ -951,10 +951,37 @@ p.muted {
 		}
 	} 
 
+	.col-sm-4.single-category {
+		width: 50% !important;
 
+		.col-sm-3 {
+			width: 15% !important;
+		}
 
+		.col-sm-9 {
+			width: 85% !important;
+		}	
+	}
 
-	ul {
+	
+
+	ol {
+		&.breadcrumb {
+			li {
+				a {
+					color: #2965be;
+				}
+			}
+
+			.current-category {
+				font-weight: bold;
+				color: #333;				
+			}
+
+		}
+	}
+
+	ul {		
 		li {
 			/*@extend .img-thumbnail;
 			border-color: $body-bg !important;

@@ -30,7 +30,7 @@ class Category extends Eloquent {
 	 *
 	 * @var array
 	*/
-	protected $appends = array('children', 'css_class');
+	protected $appends = array('children', 'parents', 'css_class');
 
 	/**
 	 * Validation rules
@@ -84,6 +84,33 @@ class Category extends Eloquent {
 	public function getChildrenAttribute() 
 	{
 		return $this->getCategoriesByParentId( $this->id, array('is_active' => 1) );
+	}
+
+	/**
+	 * Expands a list of parent dependencies 
+	*/
+	public function getParentsAttribute() 
+	{
+		$arr = array();
+
+		if ( $this->path ) {
+			$arrTmp = explode('/', $this->path);
+			
+			foreach( $arrTmp  as $iParentId ) {
+				if ($iParentId) {
+					$oCat = self::find( $iParentId );
+
+					if ( $oCat ) { 
+						$arr[ $iParentId ] = array(
+							'id' => $oCat->id,
+							'name' => $oCat->name
+						);
+					}	
+				}				
+			}
+		}
+
+		return $arr;
 	}
 
 	/**

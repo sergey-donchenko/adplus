@@ -26,24 +26,65 @@ class CategoryController extends \BaseController {
 	*/
 	public function getForm( $id = null )
 	{
-		$oCategory = null;
-		
-		if ( $id ) {
-			$oCategory = Category::find( $id );
-		}
-		
-		$sResult   = View::make('category.admin.form', array('oCategory' => $oCategory));
+		return 	$this->_getCategoryById( $id, 'category.admin.form' );	
+	}
 
-		if ( Request::ajax() ) {
+	/**
+	 * Return a rendered list for the given parent category
+	*/
+	public function getListItems( $id = null )
+	{
+		return $this->_getCategoryById( $id, 'category.list.items', array( 
+			'bHideTitle' => true,
+			'bShowAll' => true,
+			'sContainerClass' => 'single-category'
+		));
+	}
+
+	/**
+	 * Get category by template
+	 *
+	 * @param <int> $id - category identifier
+	 * @param <string> $sTemplate - blade template 
+	 * @param <array> $aViewParams - additional view params that could be set from the caller
+	 *
+	 * @return ( string | json )
+	*/
+	private function _getCategoryById( $id = null, $sTemplate = '', $aViewParams = array() ) 
+	{
+		$oCategory = null;
+		$sTempl    = 'category.admin.form';		
+
+		if ( empty( $id ) === false ) {
+			$oCategory = Category::find( $id );
+		} 
+
+		if ( empty( $sTemplate ) === false ) {
+			$sTempl = $sTemplate;
+		}
+
+		$aParams = array(
+			'oCategory' => $oCategory,
+			'aCategories' => array($oCategory)
+		);
+		
+		if ( empty($aViewParams) === false ) {
+			$aParams = array_merge( $aParams, $aViewParams );
+		}
+
+		$sResult = View::make( $sTempl, $aParams);
+
+		// if ( Request::ajax() ) {
 			$aResponce = $this->_aResponse;
 
-			$aResponce['data'] = $oCategory;			
-			$aResponce['html'] = (String) $sResult;			
+			$aResponce['status'] = true;			
+			$aResponce['data']   = $oCategory;			
+			$aResponce['html']   = (String) $sResult;			
 
-			return Response::json($aResponce);
-		} else {
-			return $sResult;
-		}		
+			return Response::json( $aResponce );
+		// } else {
+		// 	return $sResult;
+		// }
 	}
 
 	/**
@@ -212,7 +253,7 @@ class CategoryController extends \BaseController {
 	            'msg' => 'Unauthorized attempt to create setting'
 	        ) );
 	    }
-
+	    
 	    if ( Input::get('id') ) {
 	    	$oCategory = Category::find( Input::get('id') );
 
