@@ -56,11 +56,14 @@
     						<div class="row">    						                                
                                 <br />
     							<div class="form-group">
-    								<div class="col-sm-12">                                        
+    								<div class="col-sm-12">   
+    									<label>Category </label> <br />
                                         <button type="button" id="selectCategory" class="btn btn-default navbar-btn" title="Change Category">
                                             <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;...
                                         </button>
-                                        <label id="selectedCategory"></label>                                        
+                                        <label id="selectedCategory">
+                                        	<input type="hidden" name="category_id" attr-parent-id="" value="0" />                                        	
+                                        </label>                                        
                                     </div>    								
     							</div>	    						
     						</div>

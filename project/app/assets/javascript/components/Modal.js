@@ -25,6 +25,7 @@ var modModal = (function ( $, adPlus ) {
 			'</div>',
 		onclick: null,
 		onload: null, // triggered when the content was completely finished a loading process
+		onshow: null,
 		oninitialload: null
 	};
 
@@ -53,6 +54,8 @@ var modModal = (function ( $, adPlus ) {
 				_config.bodyContent = modalBody;
 
 				modal.on('show.bs.modal', function ( e ) {
+					console.log('on show....');
+
 					if ( _config.url !== null ) {
 						if ( _config.history[_config.url] ) {
 							modalBody.html( _config.history[_config.url] );
@@ -74,6 +77,11 @@ var modModal = (function ( $, adPlus ) {
 						}
 					} else {
 						modalBody.html( _config.content );
+					}
+
+					// fire event "onShow"
+					if ( _config.onshow ) {
+						_config.onshow( e );
 					}
 				});
 

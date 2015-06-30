@@ -229,10 +229,10 @@ var modCategory = (function ( $, adPlus ) {
 
 						setChooserDialogBody( initId );
 					} else if ( target.classList.contains('selectable') ) {
-																			
+
 						if( jQuery(selectedCategory).length > 0 ) {
 							jQuery(selectedCategory).html(
-								'<input type="hidden" name="category_id" value="' + jQuery(e.target).attr('attr-id') + '" />' + 
+								'<input type="hidden" name="category_id" attr-parent-id="' + jQuery(e.target).attr('attr-parent-id') + '" value="' + jQuery(e.target).attr('attr-id') + '" />' + 
 								jQuery(e.target).attr('title')
 							);
 						}
@@ -243,11 +243,25 @@ var modCategory = (function ( $, adPlus ) {
 
 					return false;
 				},
-					
+				
+				onshow: function( e ) {
+					var selectedCategory = $('#selectedCategory');
+
+					jQuery(selectedCategory).find('input[name="category_id"]').each(function(){
+						var iVal = jQuery(this).val(),
+							iParentId = jQuery(this).attr('attr-parent-id');
+
+						if ( iVal > 0 && iParentId > 0 ) {
+							setTimeout(function(){
+								setChooserDialogBody( iParentId );
+							}, 30);	
+						}
+					});
+				},
+
 				oninitialload: function( data, status, e) {
 					setTimeout( function(){
-						var content = getChooserDialogBody(),
-							selectedCategory = $('#selectedCategory');
+						var content = getChooserDialogBody();
 
 						if ( content ) { 
 							aCategoryForms['init'] = {

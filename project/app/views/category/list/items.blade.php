@@ -12,10 +12,10 @@
 
 					@foreach( $cItem->getChildrenAttribute() as $index => $cSubItem)									
 						@if ( $index >= 5 && !( isset($bShowAll) && $bShowAll === true ) )
-							<p><a href="#" class="category-item hasChildren" attr-id="{{ $cItem->id }}" title="{{ $cItem->name }}">more >></a></p>
+							<p><a href="#" class="category-item hasChildren" attr-id="{{ $cItem->id }}" attr-parent-id="0" title="{{ $cItem->name }}">more >></a></p>
 							<?php break;?>
 						@endif
-						<a href="" class="category-item {{ $cSubItem->getCssClassAttribute() }}" attr-id="{{ $cSubItem->id }}" title="{{ $cSubItem->name }}">							
+						<a href="" class="category-item {{ $cSubItem->getCssClassAttribute() }}" attr-id="{{ $cSubItem->id }}" attr-parent-id="{{ $cSubItem->parent_id }}" title="{{ $cSubItem->name }}">							
 							{{ $cSubItem->name }}
 							@if ( $cSubItem->children_count > 0 )
 							***

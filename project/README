@@ -2,10 +2,20 @@
 
     1.1) ./artisan migrate:make create_category_table --create=categories
     1.2) the above command creates file app/database/migrations/2015_03_29_090046_create_category_table 
+    1.3) To ALTER TABLE:  ./artisan migrate:make add_votes_to_user_table --table=users
 
 2. Execute migration
    
    ./artisan migrate    
+
+   (./artisan migrate:refresh --seed)
+
+2.1 Seed database:  
+  All seed classes are stored in app/database/seeds. Seed classes may have any name you wish, but probably should follow some sensible convention, such as UserTableSeeder, etc.
+
+  ./artisan db:seed 
+
+  to execute some specific class just call with option --class=UserTableSeeder
 
 3. Once the new Controller was added we need to clear the route cache by executing the following command:
 	sudo composer dumpautoload
