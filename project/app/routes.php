@@ -32,6 +32,7 @@ Route::group(array('prefix' => 'admin'), function() {
 	Route::post('/settings', array('as' => 'admin.save-settings', 'before' => 'auth', 'uses' => 'SettingsController@save'));	
 	
 	Route::get('/category/{id?}', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));	
+	Route::get('/fieldset/', array('as' => 'admin.fieldset', 'before' => 'auth', 'uses' => 'FieldsetController@index'));	
 	Route::get('/category-form/{id?}', array('as' => 'admin.category.form', 'before' => 'auth', 'uses' => 'CategoryController@getForm'));	
 	Route::post('/category', array('as' => 'admin.add-category', 'before' => 'auth', 'uses' => 'CategoryController@save'));	
 	Route::delete('/category', array('as' => 'admin.delete-category', 'before' => 'auth', 'uses' => 'CategoryController@delete'));	

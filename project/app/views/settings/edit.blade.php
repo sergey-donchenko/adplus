@@ -27,7 +27,7 @@
 					    <li class="active"><a href="#general" data-toggle="tab">General</a></li>					   
 					    <li><a href="#contacts" data-toggle="tab">Contacts</a></li>
 					    <li><a href="#listing" data-toggle="tab">Listing</a></li>
-						<li><a href="#seo" data-toggle="tab">SEO</a></li>				   					   
+						<li><a href="#seo" data-toggle="tab">SEO</a></li>				   					   						
 					</ul>
 
 					<div class="tab-content">			
@@ -88,6 +88,7 @@
 		    			<div class="tab-pane fade" id="listing">
 		    				<h1>LISTING</h1>
 		    			</div>
+
 		    			<div class="tab-pane fade in" id="seo">
 		    				<h1>SEO</h1>
 		    			</div>
