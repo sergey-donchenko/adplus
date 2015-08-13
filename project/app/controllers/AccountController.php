@@ -64,6 +64,7 @@ class AccountController extends \BaseController {
 	        ));
 		} else {
 
+
 		    if (Auth::attempt(array('user_email' => $formFields['email'], 'password' => $userData['password'], 'user_is_active' => '1'), $userData['rememberme']) ) {
 			    return Response::json(array(
 		            'fail' => false,

@@ -1,4 +1,13 @@
+0. Install composer:
+
+    # curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    # composer unstall
+    
+
 1. Create migration /create a new table/:
+
+    1.0) ./artisan migrate:install <== to init the migration table
+
 
     1.1) ./artisan migrate:make create_category_table --create=categories
     1.2) the above command creates file app/database/migrations/2015_03_29_090046_create_category_table 

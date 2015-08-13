@@ -1,8 +1,12 @@
-/bootstrap/compiled.php
-/vendor
-/bower_components
-/node_modules
-/.sass-cache
+bootstrap/compiled.php
+vendor
+bower_components
+node_modules
+.sass-cache
+
+app/storage/*
+app/storage/**/*
+
 npm-debug.log
 composer.phar
 composer.lock

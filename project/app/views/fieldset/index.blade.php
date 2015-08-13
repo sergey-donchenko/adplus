@@ -39,8 +39,8 @@
 					    		<td>{{ $aItem->id }}</td>
 					    		<td>{{ $aItem->name }}</td>
 					    		<td>
-					    			<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-					    			<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+					    			{{ HTML::link( URL::route('admin.fieldset.edit', array('id' => $aItem->id )), 'Edit', array('class' => 'btn btn-default btn-xs') ) }}
+					    			{{ HTML::link( URL::route('admin.fieldset.delete', array('id' => $aItem->id )), '<span class="glyphicon glyphicon-remove" aria-hidden="true">', array('class' => 'btn btn-default btn-xs') ) }}
 					    		</td>
 					    	</tr>	
 					    	@endforeach

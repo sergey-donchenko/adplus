@@ -13,4 +13,14 @@ class FieldsetController extends \BaseController {
 
 		return View::make('fieldset.index', array( 'aFieldsSet' => $aFieldsSet ));
 	}	
+
+	/**
+	 * Render the edit page
+	*/
+	public function edit( $id )
+	{
+		$aFieldsSet = array();
+		
+		return View::make('fieldset.edit', array('oFieldsSet' => $aFieldsSet));
+	}
 }
