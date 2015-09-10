@@ -14,8 +14,9 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserTableSeeder');
 		$this->call('FieldTypeSeeder');
 		$this->call('FieldSetSeeder');
+		$this->call('FieldsSeeder');	
 
-		$this->command->info('User table seeded!');
+		$this->command->info('All commands were executed successfully!');	
 	}
 }
 
@@ -39,6 +40,6 @@ class UserTableSeeder extends Seeder
 			'user_company_name' => 'AdPlus', 
 			'user_is_active' => '1', 
 			'user_email' => 'admin@custom.com'
-		));	
+		));			
 	}
 }

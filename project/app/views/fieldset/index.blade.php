@@ -13,6 +13,11 @@
 
    	<div class="row">
    		<div class="col-sm-12">
+
+   			@include('breadcrumb.standard', array('arrList' => array(
+   				0 => array('url' => '', 'title' => Lang::get('pages.nav.custom_fields') )
+   			)))
+
    			<div class="panel panel-default settings-panel">
    				<div class="panel-heading">
 					<h1 class="panel-title icon-head head-categories"><?php echo Lang::get('admin.headers.fieldset') ?></h1>
@@ -21,7 +26,7 @@
 				<div class="panel-body">
 					<div class="panel panel-default">
 						<div class="panel-body">
-						    <button type="button" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Fieldset</button>
+							{{ html_entity_decode( HTML::link( URL::route('admin.fieldset.new'), '<span class="glyphicon glyphicon-plus" aria-hidden="true"> New Fieldset', array('class' => 'btn btn-default btn-xs pull-right') ) ) }}
 						</div>
 					</div>
 
@@ -39,8 +44,8 @@
 					    		<td>{{ $aItem->id }}</td>
 					    		<td>{{ $aItem->name }}</td>
 					    		<td>
-					    			{{ HTML::link( URL::route('admin.fieldset.edit', array('id' => $aItem->id )), 'Edit', array('class' => 'btn btn-default btn-xs') ) }}
-					    			{{ HTML::link( URL::route('admin.fieldset.delete', array('id' => $aItem->id )), '<span class="glyphicon glyphicon-remove" aria-hidden="true">', array('class' => 'btn btn-default btn-xs') ) }}
+					    			{{ html_entity_decode( HTML::link( URL::route('admin.fieldset.edit', array('id' => $aItem->id )), '<span class="glyphicon glyphicon-pencil" aria-hidden="true">', array('class' => 'btn btn-default btn-xs') ) ) }}
+					    			{{ html_entity_decode( HTML::link( URL::route('admin.fieldset.delete', array('id' => $aItem->id )), '<span class="glyphicon glyphicon-remove" aria-hidden="true">', array('class' => 'btn btn-default btn-xs') ) ) }}
 					    		</td>
 					    	</tr>	
 					    	@endforeach

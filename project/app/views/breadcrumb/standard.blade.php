@@ -1,6 +1,19 @@
 <ol class="breadcrumb">
 	<li><a href="#">Home</a></li>
-    <li><a href="#">Vehicles</a></li>
-    <li class="active">Cars</li>
-    <li class="active">4,699 results for <strong>"Cars"</strong> in London</li>
+
+	@foreach( $arrList as $oItem )
+
+		@if ( $oItem === end($arrList) )
+			<li class="active">
+		@else
+			<li>		
+		@endif
+
+		@if ( empty($oItem['url']) === false )
+			{{ HTML::link( $oItem['url'], $oItem['title'] ) }}
+		@else
+			{{ $oItem['title'] }}
+		@endif				
+	</li>
+	@endforeach   
 </ol>

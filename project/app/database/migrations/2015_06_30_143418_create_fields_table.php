@@ -26,12 +26,13 @@ class CreateFieldsTable extends Migration {
 			$table->char('is_sortable', 1)->default('0');
 			$table->char('is_used_in_list', 1)->default('0');
 			$table->timestamps();
+			$table->softDeletes();
 
-			$table->foreign('id_field_type')
+			$table->foreign('id_field_type', 'fgk_field_type')
 				->references('id')->on('fields_types')
 		        ->onDelete('cascade');
 
-			$table->foreign('id_field_set')
+			$table->foreign('id_field_set', 'fgk_field_set')
 		        ->references('id')->on('fields_set')
 		        ->onDelete('cascade');
 
@@ -47,7 +48,18 @@ class CreateFieldsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('fields');
+		if (Schema::hasTable('fields')) {
+
+			Schema::table('fields', function(Blueprint $table) {
+				$foreignKeyNames = array( 'fgk_field_type', 'fgk_field_set');
+
+				foreach( $foreignKeyNames as $fKey ) {					
+					$table->dropForeign( $fKey );					
+				}	
+			});
+
+			Schema::dropIfExists('fields');
+		}	
 	}
 
 }

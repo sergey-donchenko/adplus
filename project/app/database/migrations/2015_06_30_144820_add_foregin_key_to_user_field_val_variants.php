@@ -16,7 +16,7 @@ class AddForeginKeyToUserFieldValVariants extends Migration {
 		{
 			$table->integer('id_field')->unsigned()->after('value');
 
-			$table->foreign('id_field')
+			$table->foreign('id_field', 'fgk_fields_variants')
 				->references('id')->on('fields')
 		        ->onDelete('cascade');
 		});
@@ -28,11 +28,16 @@ class AddForeginKeyToUserFieldValVariants extends Migration {
 	 * @return void
 	 */
 	public function down()
-	{
-		Schema::table('fields_val_variants', function(Blueprint $table)
-		{
-			$table->dropColumn('id_field');
-		});
+	{		
+		if ( Schema::hasColumn('fields_val_variants', 'id_field') ) {			
+			Schema::table('fields_val_variants', function(Blueprint $table) {
+				// Drop foregin key for the field
+				$table->dropForeign( 'fgk_fields_variants' );
+
+				//Drop the field
+				$table->dropColumn('id_field');			
+			});
+		}		
 	}
 
 }

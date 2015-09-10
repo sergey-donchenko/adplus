@@ -12,8 +12,10 @@ class AlterPasswordField extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('users', function(Blueprint $table) {
-			$table->renameColumn('user_password', 'password');
+		Schema::table('users', function(Blueprint $table) {			
+			if ( Schema::hasColumn('users', 'user_password') ) {	
+				$table->renameColumn('user_password', 'password');
+			}	
 		});
 	}
 
@@ -24,9 +26,11 @@ class AlterPasswordField extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('users', function(Blueprint $table){
-			$table->renameColumn('password', 'user_password');
-		});
+		if ( Schema::hasColumn('users', 'password') ) {	
+			Schema::table('users', function(Blueprint $table) {				
+				$table->renameColumn('password', 'user_password');								
+			});
+		}
 	}
 
 }
