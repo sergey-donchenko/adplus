@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder {
 		$this->call('FieldTypeSeeder');
 		$this->call('FieldSetSeeder');
 		$this->call('FieldsSeeder');	
+		$this->call('CategorySeeder');
+		$this->call('CategoryFieldsSeeder');
 
 		$this->command->info('All commands were executed successfully!');	
 	}

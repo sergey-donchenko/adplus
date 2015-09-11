@@ -1,5 +1,8 @@
 <?php 
 	$aCategory           = array();
+	$aFieldIds           = array();
+	$aParentFieldsetIds  = array();
+	$aParentFieldset     = array();
 	$sAvailableStatus    = 'glyphicon-eye-open';
 	$sStatusMessage      = Lang::get('pages.status.shown', array('object' => 'Category'));
 	$sCategoryStatusIcon = '<span class="glyphicon %%status%%" aria-hidden="true" title="Category status"></span>';
@@ -9,7 +12,18 @@
 			$sAvailableStatus = 'glyphicon-eye-close';
 			$sStatusMessage   = Lang::get('pages.status.hidden', array('object' => 'Category'));
 		}
-	}
+
+		// Get Custom fields for the category
+		foreach( $oCategory->getCustomFieldsAttribute() as $oField ) {
+			$aFieldIds[] = $oField->id;
+		}
+
+		// Get Parent field set attributes
+		foreach( $aParentFieldset = $oCategory->getParentFieldsetAttribute() as $oFieldSetId ) {
+			$aParentFieldsetIds[] = $oFieldSetId->id_fieldset;
+		}
+	}	
+
 ?>
 <div class="panel panel-default category-panel">
 	<div class="panel-heading">
@@ -23,16 +37,19 @@
 
 		<ul id="categoryTabSet" class="nav nav-tabs">
 		   <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+		   @if ( isset($aCategory['id']) )
+		   <li><a href="#custom-fields" data-toggle="tab">Custom Fieslds</a></li>
+		   @endif
 		   <?php /* ?>
-			   <li><a href="#permissions" data-toggle="tab">Permissions</a></li>
+			   
 			   <li><a href="#adverts" data-toggle="tab">Advers</a></li>				   
 		   <?php */ ?>
 		</ul>
 		
 		<div class="row text-right display-status">{{ HTML::decode(str_replace(array('%%status%%','%%title%%'), array($sAvailableStatus, $sStatusMessage), $sCategoryStatusIcon) ) }}</div>
 
-		<div class="tab-content">			
-		    <div class="tab-panel fade in active" id="general">
+		<div class="tab-content panel panel-default">			
+		    <div class="tab-pane fade in active panel-body" id="general">
 					    	
 		    	<div class="row">
 		    		<div class="col-sm-12">		                            
@@ -103,6 +120,64 @@
 		        </div>            
 
 			</div>
+			
+			@if ( isset( $aCategory['id'] ) )			
+			<div class="tab-pane fade panel-body" id="custom-fields">
+				<div class="row custom-fields">
+					
+					@if ( $aParentFieldset )
+					<div class="col-sm-12">
+						<h2>Inherited from:</h2>
+						@foreach( $aParentFieldset as $oFieldSet)
+							{{ Form::label( 'fieldset_label', $oFieldSet->fieldsetname, array('class' => 'awesome')) }}							
+						@endforeach	
+						<hr />							
+					</div>
+					@endif
+
+					<div class="col-sm-12 checkbox">
+						<h2>Custom Fields Set:</h2>
+						{{ Form::radio( 'category_id_fieldset', 0,  ( empty($aCategory['id_fieldset']) ? true : false), array( 'id' => 'category_id_fieldset0' ) ) }}
+						{{ Form::label( 'category_id_fieldset0', 'No custom fields', array('class' => 'awesome')) }}
+						<p class="help-block">When the Category does not have any Custom Definitions</p>	
+					</div>
+
+					@if ( isset($oFieldSets) )					
+						@foreach( $oFieldSets as $oItem)						
+						<?php 
+							$aFields         = $oItem->getFieldsAttribute(); 
+							$sDisabled       = ( $aFields->count() == 0 ? ' disabled' : '' );
+							$aDisableChecker = array($sDisabled);							
+						?>
+
+						<div class="col-sm-12 checkbox{{ $sDisabled }}">	
+							@if ( in_array( $oItem->id, $aParentFieldsetIds ) === false )														
+								{{ Form::radio('category_id_fieldset', $oItem->id,  ($aCategory && $aCategory['id_fieldset'] === $oItem->id ? true : false), array_merge( array( 'id' => 'category_id_fieldset' . $oItem->id ), $aDisableChecker ) ) }}
+								{{ Form::label( 'category_id_fieldset' . $oItem->id, $oItem->name, array('class' => 'awesome')) }}
+
+								<p class="help-block">{{ $oItem->description }}</p>						
+								
+								@if( empty($aFields) === false )
+								<div class="category-custom-fields">
+									@forelse( $aFields as $oField )
+									<div class="col-sm-12 checkbox">
+									{{ Form::checkbox('category_custom_fields[]', $oField->id,  ( empty($aFieldIds) ? true : in_array( $oField->id, $aFieldIds ) ), array_merge( array( 'id' => 'category_custom_fields' . $oField->id ), $aDisableChecker ) ) }}
+									{{ Form::label( 'category_custom_fields' . $oField->id, $oField->title, array('class' => 'awesome')) }}									
+									</div>
+									@empty
+									<p class="help-block">... {{ HTML::link( URL::route('admin.fieldset.edit', array( 'fid' => $oItem->id ) ), 'Add fields', array('class' => 'btn btn-link') ) }}</p>
+									@endforelse
+								</div>					
+								@endif	
+
+							@endif 	
+						</div>						
+						@endforeach	
+					@endif
+				</div>
+			</div>
+			@endif
+
 			<?php /* ?>
 			<div class="tab-panel fade" id="permissions">Permissions</div>
 			<div class="tab-panel fade" id="adverts">Adverts</div>				    
@@ -112,7 +187,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				{{ Form::button(
-					'<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Category7', 
+					'<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Category', 
 					array('type' => 'submit', 'class' => 'btn btn-success pull-right')) 
 				}}							
 			</div>

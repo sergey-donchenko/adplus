@@ -33,9 +33,7 @@
           @include('category.admin.tree')    
 		  </div>
 
-		  <div class="col-sm-9" id="categoryFormWrapper">			
-        	@include('category.admin.form', array('oCategory'=> $aCategory ))	
-		  </div>	
+		  <div class="col-sm-9" id="categoryFormWrapper">{{ $sCategoryForm }}</div>	
    	</div>
 </div> 
 

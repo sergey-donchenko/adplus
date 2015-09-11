@@ -9,13 +9,7 @@ class CategoryController extends \BaseController {
 	 */
 	public function index( $id = null )
 	{
-		$aCategory = array();
-
-		if ( $id ) {
-			$aCategory = Category::find( $id );		
-		}
-			
-		return View::make('category.admin.index', array( 'aCategory' => $aCategory ));
+		return View::make('category.admin.index', array( 'sCategoryForm' => $this->getForm( $id ) ));
 	}
 
 	/**
@@ -52,8 +46,11 @@ class CategoryController extends \BaseController {
 	*/
 	private function _getCategoryById( $id = null, $sTemplate = '', $aViewParams = array() ) 
 	{
-		$oCategory = null;
-		$sTempl    = 'category.admin.form';		
+		$oCategory  = null;
+		$sTempl     = 'category.admin.form';		
+		$aFieldSets = FieldSet::where('is_active', '=', '1')
+			->orderBy('name')
+			->get(); 
 
 		if ( empty( $id ) === false ) {
 			$oCategory = Category::find( $id );
@@ -64,9 +61,10 @@ class CategoryController extends \BaseController {
 		}
 
 		$aParams = array(
+			'oFieldSets' => $aFieldSets,
 			'oCategory' => $oCategory,
-			'aCategories' => array($oCategory)
-		);
+			'aCategories' => array($oCategory)			
+		);		
 		
 		if ( empty($aViewParams) === false ) {
 			$aParams = array_merge( $aParams, $aViewParams );
@@ -74,7 +72,7 @@ class CategoryController extends \BaseController {
 
 		$sResult = View::make( $sTempl, $aParams);
 
-		// if ( Request::ajax() ) {
+		if ( Request::ajax() ) {
 			$aResponce = $this->_aResponse;
 
 			$aResponce['status'] = true;			
@@ -82,9 +80,9 @@ class CategoryController extends \BaseController {
 			$aResponce['html']   = (String) $sResult;			
 
 			return Response::json( $aResponce );
-		// } else {
-		// 	return $sResult;
-		// }
+		} else {
+			return $sResult;
+		}
 	}
 
 	/**
@@ -172,12 +170,13 @@ class CategoryController extends \BaseController {
                 ->withErrors( $validator );
         } else
 		if( $validator->passes() ) {			
-			$iId       = Input::get('category_id');
-			$iParentId = Input::get('parent_id');
-			$sCatIcon  = Input::file('category_icon');
-			$sCatCover = Input::file('category_cover');
-			$sStrgPth  = Config::get('storage.image') . '/' . Category::STORAGE_PREFIX;
-			$sPath     = '';
+			$iId         = Input::get('category_id');
+			$iParentId   = Input::get('parent_id');
+			$sCatIcon    = Input::file('category_icon');
+			$sCatCover   = Input::file('category_cover');
+			$iFieldSetId = Input::get('category_id_fieldset');
+			$sStrgPth    = Config::get('storage.image') . '/' . Category::STORAGE_PREFIX;
+			$sPath       = '';
 
 			if ( $iId ) {
 				$cat = Category::find( $iId );		
@@ -211,6 +210,7 @@ class CategoryController extends \BaseController {
 			$cat->position           = Input::get('category_position');
 			$cat->parent_id          = $iParentId;
 			$cat->is_active          = Input::get('category_is_active');			
+			$cat->id_fieldset        = ( $iFieldSetId > 0 ? $iFieldSetId : NULL);
 				
 			if ( $iParentId && $catParent = Category::find( $iParentId ) ) {
 				$sPath = $catParent->path . '/' . $iParentId;	
@@ -231,6 +231,30 @@ class CategoryController extends \BaseController {
 				$catParent->children_count = $iCnt;
 				$catParent->save();
 			} 
+
+			// Update fields dependecies
+			if ( $cat->id > 0 ) {
+				CategoryFields::where('id_category', '=', $cat->id)
+					->delete();
+
+				$aFields = Input::get('category_custom_fields');
+
+				if ( $aFields ) {
+					$aRecords = array();
+
+					foreach ( (array) $aFields as $iFieldId ) {
+						$aRecords[] = array(
+							'id_category' => $cat->id,
+							'id_field' => $iFieldId,
+							'created_at' => date('Y-m-d H:i:s')
+						);
+					}
+
+					if ( $aRecords ) {
+						CategoryFields::insert($aRecords);
+					}	
+				}				
+			}
 
 			// die( 'Category Identifier: ' . $iCatId );
 			// redirect
