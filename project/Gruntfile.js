@@ -16,21 +16,21 @@ module.exports = function(grunt) {
 		          ' */\n'
 		},
 
-		react: {
-		    files: './app/assets/javascript/react_components/*.jsx',
-		    tasks: ['browserify']
-		},
+		// react: {
+		//     files: './app/assets/javascript/react_components/*.jsx',
+		//     tasks: ['browserify']
+		// },
 
-		browserify: {
-			options: {
-		        transform: [ require('grunt-react').browserify ]
-		    },
+		// browserify: {
+		// 	options: {
+		//         transform: [ require('grunt-react').browserify ]
+		//     },
 		    
-		    client: {
-		        src: ['./app/assets/javascript/react_components/**/*.jsx'],
-		        dest: './public/js/app.built.js'
-		    }
-		},
+		//     client: {
+		//         src: ['./app/assets/javascript/react_components/**/*.jsx'],
+		//         dest: './public/js/app.built.js'
+		//     }
+		// },
 
         concat: {
         	options: {
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 		        src: [	
 		            './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
 		            './app/assets/javascript/components/Application.js', // Init the application
-		            './app/assets/javascript/components/**/*.js',
+		            // './app/assets/javascript/components/**/*.js',
 		            './app/assets/javascript/frontend.js'
 		        ],
 		        dest: './public/js/frontend.js',
@@ -54,6 +54,23 @@ module.exports = function(grunt) {
         },
 
         copy: {
+
+        	dev: {
+        		files: [
+        			{
+				    	expand: true,
+				    	cwd: './app/assets/javascript/modules/',
+				    	src: ['**'],
+				    	dest: './public/js/modules'
+				    }, {
+				    	expand: true,
+				    	cwd: './app/assets/javascript/',
+				    	src: ['dev-main.js'],
+				    	dest: './public/js/'				    	
+				    }
+        		]
+        	},
+
         	dist : {
         		files: [{
 			        expand: true,
@@ -74,23 +91,58 @@ module.exports = function(grunt) {
 			        expand: true,
 			        cwd: './bower_components/flot/',
 			        src: ['jquery.flot.js'],
-			        dest: './public/js/jquery'
+			        dest: './app/assets/javascript/vendors'
+			    }, 
+
+			    {
+			        expand: true,
+			        cwd: './node_modules/backbone/',
+			        src: ['backbone-min.js'],
+			        dest: './public/js/vendors'
 			    }, {
+			        expand: true,
+			        cwd: './node_modules/backbone/',
+			        src: ['backbone-min.map'],
+			        dest: './public/js/vendors'
+			    },
+
+			    {
+			        expand: true,
+			        cwd: './node_modules/backbone/node_modules/underscore/',
+			        src: ['underscore-min.js'],
+			        dest: './public/js/vendors'
+			    }, {
+			        expand: true,
+			        cwd: './node_modules/backbone/node_modules/underscore/',
+			        src: ['underscore-min.map'],
+			        dest: './public/js/vendors'
+			    },
+
+			    {
 			        expand: true,
 			        cwd: './bower_components/jquery/dist/',
 			        src: ['jquery.min.js'],
-			        dest: './public/js/jquery'
+			        dest: './public/js/vendors'
 			    }, {
 			        expand: true,
 			        cwd: './bower_components/jquery/dist/',
 			        src: ['jquery.min.map'],
-			        dest: './public/js/jquery'
+			        dest: './public/js/vendors'
 			    }, {
 			    	expand: true,
 			        cwd: './bower_components/regula/dist/',
 			        src: ['regula-1.3.4.min.js'],
-			        dest: './public/js/'			    	
-			    }, {
+			        dest: './public/js/vendors/',
+				    rename: function(dest, src) {
+				        return dest + src.replace('-1.3.4', '');
+				    }
+			    },
+
+			    // ================= // 
+			    // END of require JS
+			    // ================= //
+
+			     {
 			        expand: true,
 			        cwd: './bower_components/dropzone/downloads/',
 			        src: ['dropzone.min.js'],
@@ -150,12 +202,25 @@ module.exports = function(grunt) {
             }
         },
 
+        requirejs: {
+		    compile: {
+			    options: {
+			      mainConfigFile: './app/assets/javascript/build.js',
+			      baseUrl: './app/assets/javascript',
+			      name: "main",
+			      include: ['build'],
+			      out: './public/js/main.min.js'
+			    }
+		    }
+		},
+
  		uglify: {
         	dist: {
 		        files: {
 		          './public/js/frontend.js': './public/js/frontend.js',
 		          './public/js/easyTree.min.js': './public/js/easyTree.js',
 		          './public/js/admin.min.js': './public/js/admin.js',
+		          './public/js/vendors/require.min.js': './node_modules/requirejs/require.js'
 		        }
 		    }
         },
@@ -209,10 +274,19 @@ module.exports = function(grunt) {
 		        }
         	},
 
-        	react: {
-		        files: './app/assets/javascript/react_components/*.jsx',
-		        tasks: ['browserify']
-		    },
+        	requirejs: {
+        		files: ['./app/assets/javascript/modules/**/*.js', './app/assets/javascript/dev-main.js'],
+        		tasks: ['clean:dev','copy:dev'],
+        		options: {
+		            livereload: true                        //reloads the browser
+		        }
+        	},
+
+      //   	react: {
+		    //     files: './app/assets/javascript/react_components/*.jsx',
+		    //     tasks: ['browserify']
+		    // },
+
 
         	tests: {
 		        files: ['app/controllers/*.php', 'app/models/*.php'],  //the task will run only when you save files in this location
@@ -222,7 +296,13 @@ module.exports = function(grunt) {
 
         // REMOVE FILES
         clean: {
-		    css: ["./public/css/*.css", "!./public/css/*.min.css"]
+        	dev: {
+        		js: ['./public/js/modules/*.js']
+        	},
+
+        	dist: {
+        		css: ["./public/css/*.css", "!./public/css/*.min.css"]	
+        	}		    
 		}
 
     });
@@ -231,6 +311,7 @@ module.exports = function(grunt) {
  	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
  	// Task definition
- 	grunt.registerTask('default', ['watch']);
+ 	grunt.registerTask('default', ['watch']); 	
+ 	// grunt.registerTask('requirejs', ['requirejs:compile']); 	
     grunt.registerTask('build', ['copy', 'sass:dist', 'concat:dist', 'uglify:dist', 'cssmin', 'clean', 'phpunit']);
 };        

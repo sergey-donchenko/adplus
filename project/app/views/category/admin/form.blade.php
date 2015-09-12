@@ -112,7 +112,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				{{ Form::button(
-					'<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Category7', 
+					'<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Category', 
 					array('type' => 'submit', 'class' => 'btn btn-success pull-right')) 
 				}}							
 			</div>

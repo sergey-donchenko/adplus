@@ -17,7 +17,9 @@
 
         {{ HTML::style('/css/dropzone.min.css') }}
 
-		{{ HTML::style('/css/styles.min.css') }}                        
+		{{ HTML::style('/css/styles.min.css') }} 
+
+
 	</head>
     <body>
        <!--  @section('sidebar')
@@ -146,12 +148,17 @@
 		<!-- End Of Footer Section -->
 
         <!-- Bootstrap core JavaScript -->
-		<!-- Placed at the end of the document so the pages load faster -->        
+		<!-- Placed at the end of the document so the pages load faster -->
+        {{ CustomHTML::scriptRequireJs('/js/vendors/require.min.js'); }}
+        
+
+        <?php /*?>
         {{ HTML::script('/js/jquery/jquery.min.js'); }} 
         {{ HTML::script('/js/jquery/jquery.flot.js'); }}
         {{ HTML::script('/js/regula-1.3.4.min.js'); }}
         {{ HTML::script('/js/dropzone.min.js'); }}
+        <?php */?>
         @yield('footer.script.section')
-        {{ HTML::script('/js/frontend.js'); }}        		
+        <?php /* ?>{{ HTML::script('/js/frontend.js'); }} <?php */?>        		
     </body>
 </html>

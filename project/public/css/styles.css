@@ -9998,16 +9998,35 @@ h3 {
   position: relative;
 }
 
+/*
 .pagination > li > a, .pagination > li > span {
-  color: #333333;
-  border: 0px solid #007fff;
-  font-weight: bold;
-  font-size: 15px;
+	color: #333333;
+	border: 0px solid #007fff;
+	font-weight: bold;
+	font-size: 15px;
+	position: relative;
+	float: left;
+	padding: 10px 18px;
+	line-height: 1.428571429;
+	text-decoration: none;
+}*/
+.pagination-container {
+  text-align: center;
+}
+.pagination-container:hover {
+  background-color: #fff !important;
+}
+
+.pagination > li > a, .pagination > li > span {
   position: relative;
   float: left;
-  padding: 10px 18px;
-  line-height: 1.428571429;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #337ab7;
   text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
 }
 
 .pagination li > a:hover {
@@ -10136,12 +10155,9 @@ p.muted {
   color: #253033 !important;
 }
 
-.button-panel {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.button-panel button {
-  margin-bottom: 5px;
+.button-panel .btn-cancel {
+  border-radius: 4px !important;
+  padding: 6px 12px !important;
 }
 
 .category-tree-sidebar .btn {
@@ -10259,6 +10275,14 @@ p.muted {
 .col-xs-3.inputContainer {
   float: none;
   padding-left: 0px !important;
+}
+
+.edit-link {
+  color: #337ab7 !important;
+}
+
+.list-of-fieldsets .display-status {
+  display: inline !important;
 }
 
 /*******************************************
