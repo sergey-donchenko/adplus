@@ -1,34 +1,33 @@
-
 /**
  * Define the adPlusExchange object to work with dynamic and static data
  * 
  * @project AdPlus
  * 
-*/
+ */
 var adPlusExchange = (function() {
     var instance = null;
 
     /**
      * Create singleton object 
-    */
+     */
     function createObject() {
         var config = {
-            Lang : {},
-            Modules : {},
+            Lang: {},
+            Modules: {},
             App: null, // we set this object dynamically 
-            comp_form_login : 'user-login-form'            
+            comp_form_login: 'user-login-form'
         };
 
         return {
             /**
              * Init the CmonExchange with the set of variables
-            */
-            init : function( object ) {
+             */
+            init: function(object) {
                 config = jQuery.extend(config, object);
 
                 // debug information
-                console.log( config );
-            }, 
+                console.log(config);
+            },
 
             /**
              * Return config item with key "item"
@@ -37,12 +36,12 @@ var adPlusExchange = (function() {
              * @param <mixed>  defValue - default value for the setting item if it was not found
              *
              * @return < null | mixed >
-            */
-            get : function( item, defValue ) {
-                if ( config.hasOwnProperty( item ) ) {
+             */
+            get: function(item, defValue) {
+                if (config.hasOwnProperty(item)) {
                     return config[item];
-                } else 
-                if ( defValue ) {
+                } else
+                if (defValue) {
                     return defValue;
                 }
 
@@ -56,27 +55,27 @@ var adPlusExchange = (function() {
              * @param <mixed>  value - value for the setting
              *
              * @return < instance object >
-            */
-            set : function( item, value ) {
-                config[ item ] = value;                
+             */
+            set: function(item, value) {
+                config[item] = value;
 
-                return instance; 
+                return instance;
             },
 
             /**
              * Wrapper for the object to work with URL
              *
-            */
+             */
             History: {
-                
+
                 /**
                  * Take a current URL and replace it with a new one
                  *
                  * @param <string> url - part of the string that should be replaced with the current state
                  * @param <string> title - new title
                  *
-                */
-                replace: function( url, title ) {
+                 */
+                replace: function(url, title) {
                     var state = {
                         "thisIsOnPopState": true
                     };
@@ -88,7 +87,7 @@ var adPlusExchange = (function() {
             /**
              * Handle the Modules in the system
              *
-            */
+             */
             Module: {
                 /**
                  * Retrieve the module by its name
@@ -96,9 +95,9 @@ var adPlusExchange = (function() {
                  * @param <string> module - name of a module for retrieving...
                  *
                  * @return <object>
-                */    
-                get : function( module ) {
-                    if ( window.hasOwnProperty(module) ) {
+                 */
+                get: function(module) {
+                    if (window.hasOwnProperty(module)) {
                         return window[module];
                     }
 
@@ -112,11 +111,13 @@ var adPlusExchange = (function() {
 
             /**
              * The internal Ajax implementation
-            */
+             */
             Ajax: {
 
-                get: function( url, params ) {
-                    return jQuery.ajax( { 'url': url } );
+                get: function(url, params) {
+                    return jQuery.ajax({
+                        'url': url
+                    });
                 },
 
                 post: function() {
@@ -128,25 +129,25 @@ var adPlusExchange = (function() {
              * Form validation
              *
              * @return (true | false) is the form valid?
-            */
-            validate : function( form ) {
+             */
+            validate: function(form) {
                 var validationResults = regula.validate(),
                     index = 0,
                     element = null,
                     errors = [];
 
-                for(index in validationResults) {
+                for (index in validationResults) {
                     element = validationResults[index];
 
-                    if ( element ) {
-                        if ( element.failingElements.length > 0 ) {
-                            this.fieldError( element.failingElements[0], element.message );                                
-                        } 
-                        errors.push( element );    
-                    }                                         
+                    if (element) {
+                        if (element.failingElements.length > 0) {
+                            this.fieldError(element.failingElements[0], element.message);
+                        }
+                        errors.push(element);
+                    }
                 }
 
-                if ( errors.length > 0 ) {
+                if (errors.length > 0) {
                     return false;
                 }
 
@@ -157,13 +158,15 @@ var adPlusExchange = (function() {
              * Submit form to the Backend 
              *
              * @return @return Promise object
-            */
-            submit : function( form ) {
+             */
+            submit: function(form) {
                 var data = jQuery(form).serialize(),
-                    url = jQuery(form).attr( "action" ),
-                    posting = jQuery.post( url, { formData: data } );
+                    url = jQuery(form).attr("action"),
+                    posting = jQuery.post(url, {
+                        formData: data
+                    });
 
-                return posting;     
+                return posting;
             },
 
             /**
@@ -173,24 +176,24 @@ var adPlusExchange = (function() {
              * @param <string> message  - the text of the error
              * 
              * @return <object> - return the current object
-            */
-            fieldError : function( field, message ) {
-                
-                if ( field ) {
-                    jQuery( field )
+             */
+            fieldError: function(field, message) {
+
+                if (field) {
+                    jQuery(field)
                         .unbind('keypress')
-                        .bind('keypress', function(){
+                        .bind('keypress', function() {
                             jQuery(this).parents('.form-group')
                                 .removeClass('error')
                                 .find('.error-inline')
-                                .html('');    
-                    }).parents('.form-group')
+                                .html('');
+                        }).parents('.form-group')
                         .addClass('error')
                         .find('.error-inline')
-                        .html( message );
+                        .html(message);
                 }
-                        
-                return this;    
+
+                return this;
             },
 
             /**
@@ -203,52 +206,51 @@ var adPlusExchange = (function() {
              *   - error
              *   - info
              *   - warning
-            */
-            showMessage : function( title, message, type, hideTheRespPopup ) {
+             */
+            showMessage: function(title, message, type, hideTheRespPopup) {
                 var sModalId = 'modalNotification',
                     sClass = '',
-                    sIcon = ''; 
-                
+                    sIcon = '';
+
                 // Hide all previously opened dialogs
-                if ( hideTheRespPopup === true) {
-                    jQuery('.modal').modal('hide');    
+                if (hideTheRespPopup === true) {
+                    jQuery('.modal').modal('hide');
                 }
-                
-                
-                if ( title ) {
+
+
+                if (title) {
                     jQuery('#' + sModalId).find('.modal-title')
-                        .html(title);    
+                        .html(title);
                 }
-                
-                switch ( type ) {
+
+                switch (type) {
                     case 'success':
-                        sClass = 'alert-success'; 
+                        sClass = 'alert-success';
                         sIcon = 'glyphicon-ok-sign';
-                        break;    
+                        break;
                     case 'info':
-                        sClass = 'alert-info';  
-                        sIcon = 'glyphicon-info-sign';  
+                        sClass = 'alert-info';
+                        sIcon = 'glyphicon-info-sign';
                         break;
                     case 'error':
-                        sClass = 'alert-danger'; 
+                        sClass = 'alert-danger';
                         sIcon = 'glyphicon-exclamation-sign';
-                        break;    
+                        break;
                     default:
                         sClass = 'alert-warning';
                         sIcon = 'glyphicon-warning-sign';
-                                            
+
                 }
 
                 message = '<div class="alert ' + sClass + '" role="alert">'
                     //+ '<span class="glyphicon ' + sIcon + '" aria-hidden="true"></span>'
-                    + message 
-                    + '</div>'; 
-                
+                    + message + '</div>';
 
-                if ( message ) {
+
+                if (message) {
                     jQuery('#' + sModalId).find('.modal-body')
-                        .html( message );
-                }                
+                        .html(message);
+                }
 
                 jQuery('#' + sModalId).modal();
 
@@ -257,18 +259,18 @@ var adPlusExchange = (function() {
 
             /**
              * Redirect to the URL
-            */
-            toUrl : function( url, timeout ) {
-                if ( url ) {
+             */
+            toUrl: function(url, timeout) {
+                if (url) {
 
-                    if ( !timeout ) { 
+                    if (!timeout) {
                         timeout = 0;
-                    } 
+                    }
 
                     setTimeout(function() {
                         window.location.href = url;
                     }, timeout);
-                    
+
                 }
 
                 return this;
@@ -276,56 +278,56 @@ var adPlusExchange = (function() {
 
             /**
              * 
-            */
-            loadingAffect: function( component ) {
-                if ( jQuery.isEmptyObject(component) ) {
+             */
+            loadingAffect: function(component) {
+                if (jQuery.isEmptyObject(component)) {
                     return false;
                 }
 
                 component.css({
-                    'display': 'block', 
-                    'opacity': 0.7, 
+                    'display': 'block',
+                    'opacity': 0.7,
                     'z-index': 1040,
                     // 'background-color': '#000',
-                    'width': jQuery( component ).width(),
-                    'height': jQuery( component ).height()
+                    'width': jQuery(component).width(),
+                    'height': jQuery(component).height()
                 });
 
-                jQuery(component).find('.modal-backdrop').each(function(){
+                jQuery(component).find('.modal-backdrop').each(function() {
                     //
                     jQuery(this).css({
-                        'height': jQuery( component ).height() - 100
+                        'height': jQuery(component).height() - 100
                     });
-                }); 
+                });
 
             }
         }
     }
-        
+
     return {
         /**
          * Create object instance OR check if it was created previously 
          * and return singleton instance
          *
          * @return <object>
-        */
+         */
         getInstance: function() {
 
-            if ( !instance ) {
+            if (!instance) {
                 instance = new createObject();
 
-                if ( instance ) {
-                    jQuery.get( "/app/settings", function( response ) {                       
+                if (instance) {
+                    jQuery.get("/app/settings", function(response) {
 
-                        if ( response && response.status ) {
-                            instance.set( 'App', response.data );                            
+                        if (response && response.status) {
+                            instance.set('App', response.data);
                         }
 
                     });
                 }
             }
-        
+
             return instance;
-        }    
-    }  
-})( window );    
+        }
+    }
+})(window);

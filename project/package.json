@@ -25,6 +25,7 @@
   "homepage": "https://github.com/sergey-donchenko/adplus",
   "copyright": "",
   "devDependencies": {
+    "coffeeify": "^1.1.0",
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.6.0",
     "grunt-contrib-clean": "^0.6.0",
@@ -36,6 +37,7 @@
     "grunt-contrib-sass": "^0.8.1",
     "grunt-contrib-uglify": "^0.7.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-es6-module-transpiler": "^0.6.0",
     "grunt-phpunit": "^0.3.6",
     "grunt-react": "^0.12.1",
     "matchdep": "^0.3.0",
