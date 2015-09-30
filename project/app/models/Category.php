@@ -30,7 +30,7 @@ class Category extends Eloquent {
 	 *
 	 * @var array
 	*/
-	protected $appends = array('children', 'parents', 'css_class');
+	protected $appends = array('children', 'parents', 'css_class', 'custom_fields', 'parent_fieldset');
 
 	/**
 	 * Validation rules
@@ -40,6 +40,44 @@ class Category extends Eloquent {
 	public static $aRules = array(
 		'category_name' => 'required|min:3'
 	);	
+
+	/**
+	* Return a list of custom fields assigned for current Category
+	*
+	*
+	*/
+	public function getCustomFieldsAttribute() 
+	{
+		return Field::select('fields.*')
+			->join('category_fields', 'fields.id', '=', 'id_field')
+			->where('category_fields.id_category', '=', $this->id)
+			->get();
+	}
+
+	/**
+	* Return a list of parents field sets
+	*
+	*/
+	public function getParentFieldsetAttribute()
+	{		
+		$aParentIds = $this->getParentsAttribute();
+
+		if ( $aParentIds ) {
+			$aIds = array();
+
+			foreach( $aParentIds as $item ) {
+				$aIds[] = $item['id'];
+			}
+
+			return self::select('categories.id_fieldset','fields_set.name as fieldsetname')
+				->join('fields_set', 'fields_set.id', '=', 'categories.id_fieldset')
+				->whereIn('categories.id', $aIds )
+				->get();
+		}			
+
+		return array();
+	}
+
 
 	/**
 	 * Return a list of Categories by the parent identifier

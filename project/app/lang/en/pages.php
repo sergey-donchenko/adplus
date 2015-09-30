@@ -7,20 +7,48 @@
 			'login' => 'Login',
 			'logout' => 'Logout',
 			'post_an_ad' => 'Post An Ad',
+			'custom_fields' => 'Custom Fields',
+			'form_title' => 'Manage :title',
 			'home' => 'Home',
 			'typography' => 'Typography',
 			'terms_and_conditions' => 'Terms and Conditions',
 			'contact_us' => 'Contact Us',			
+			'to_the_list' => 'To The List',
+			'to_the_fieldset' => 'Back To The FieldSet'
 		),
 
 		'message' => array(
 			'note' => 'Note',
 			'leave_password_empty' => 'Leave the password fields blank if you don\'t want to change your password',
-			'subscription_mesage' => 'We can contact you with relevant properties, offers and news'
+			'subscription_mesage' => 'We can contact you with relevant properties, offers and news',
+			'delete' => 'Are you sure you want to delete :object?',
+			'wrong_deletion' => 'During the deleting something gone wrong, please try again a little bit later!',
+			'success_deletion' => ':object was successfully deleted!'
+		),
+
+		'headers' => array(
+			'fields' => 'Fields',
+			'field_header' => 'Add/Modify Field',
+
+			'id' => 'Id',
+			'fieldname' => 'Name',
+			'fieldpos' => 'Position',
+			'fieldtype' => 'Type',
+			'actions' => '',
+			'delete_object' => 'Delete :object'
 		),
 
 		'field' => array(
 			'name' => 'Name',
+			'title' => 'Title',
+			'hint' => 'Hint',
+			'pos' => 'Position',
+			'is_searchable' => 'Is Searchable',
+			'is_filterable' => 'Is Filterable',
+			'is_used_in_list' => 'Is Used In List',
+			'fieldtype' => 'Field Type',
+			'is_active' => 'Is Active',
+			'description' => 'Description',
 			'email' => 'Email address',
 			'your_firstname' => 'Your first name',
 			'your_secondname' => 'Your second name',
@@ -31,7 +59,8 @@
 		),
 
 		'button' => array(
-			'save_details' => 'Save details'
+			'save_details' => 'Save details',
+			'go_back' => 'Go Back'
 		),
 
 		'account' => array(

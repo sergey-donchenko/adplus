@@ -1,7 +1,8 @@
 <?php
 
 class Settings extends Eloquent {
-
+	use SoftDeletingTrait;
+	
 	/**
 	 * The database table used by the model.
 	 *

@@ -1036,6 +1036,7 @@ p.muted {
 	padding-left: 0px !important;	
 }
 
+<<<<<<< HEAD
 .edit-link {
 	color: #337ab7 !important;
 }
@@ -1046,6 +1047,34 @@ p.muted {
 	}	
 }
 
+=======
+.category-panel {
+	.panel-default {
+		border: none;
+	}
+}
+
+.custom-fields {
+
+	.help-block {
+		padding-left:10px;
+	}
+
+	.category-custom-fields {
+		display: block;
+	    overflow: hidden;
+		padding-left: 20px;
+		margin-top: 5px;
+	}
+
+	.checkbox, .radio {
+
+		label {
+			padding-left:10px;
+		}
+	}	
+}
+>>>>>>> 629f1521d28a97dba2f25abd5d5bcc572017d6ab
 /*******************************************
 * End of forms
 */

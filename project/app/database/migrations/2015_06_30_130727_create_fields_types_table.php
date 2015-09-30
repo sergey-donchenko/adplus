@@ -38,9 +38,7 @@ class CreateFieldsTypesTable extends Migration {
 	 */
 	public function down()
 	{
-		if (Schema::hasTable('fields_types')) {
-			Schema::drop('fields_types');
-		}	
+		Schema::dropIfExists('fields_types');			
 	}
 
 }

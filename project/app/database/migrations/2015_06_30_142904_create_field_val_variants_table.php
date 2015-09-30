@@ -31,7 +31,7 @@ class CreateFieldValVariantsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('fields_val_variants');
+		Schema::dropIfExists('fields_val_variants');
 	}
 
 }

@@ -20,6 +20,7 @@ class CreateFieldsSetTable extends Migration {
 			$table->string('lang', 10)->default('en');
 			$table->char('is_active', 1)->default('1');
 			$table->timestamps();
+			$table->softDeletes();
 
 			$table->engine = 'InnoDB';
 			$table->index(array('lang', 'name'), 'indx_fieldset_name');
@@ -33,7 +34,7 @@ class CreateFieldsSetTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('fields_set');
+		Schema::dropIfExists('fields_set');
 	}
 
 }

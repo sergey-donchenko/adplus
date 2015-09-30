@@ -30,6 +30,7 @@ Route::group(array('prefix' => 'account'), function() {
 Route::group(array('prefix' => 'admin'), function() {
 	Route::get('/settings/{tab?}', array('as' => 'admin.settings', 'before' => 'auth', 'uses' => 'SettingsController@edit'));	
 	Route::post('/settings', array('as' => 'admin.save-settings', 'before' => 'auth', 'uses' => 'SettingsController@save'));	
+<<<<<<< HEAD
 	
 	// Fieldset
 	Route::get('/fieldset/{id?}', array('as' => 'admin.fieldset', 'before' => 'auth', 'uses' => 'FieldsetController@index'));	
@@ -38,10 +39,28 @@ Route::group(array('prefix' => 'admin'), function() {
 	
 	// Category
 	Route::get('/category/{id?}', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));	
+=======
+			
+	Route::get('/fieldset/', array('as' => 'admin.fieldset', 'before' => 'auth', 'uses' => 'FieldsetController@index'));	
+	Route::get('/edit-fieldset/{id}', array('as' => 'admin.fieldset.edit', 'before' => 'auth', 'uses' => 'FieldsetController@edit'));	
+	Route::get('/new-fieldset/', array('as' => 'admin.fieldset.new', 'before' => 'auth', 'uses' => 'FieldsetController@edit'));	
+	Route::get('/fieldset/delete/{id}', array('as' => 'admin.fieldset.delete', 'before' => 'auth', 'uses' => 'FieldsetController@delete'));	
+	Route::post('/fieldset/save', array('as' => 'admin.fieldset.save', 'before' => 'auth', 'uses' => 'FieldsetController@doSave'));	
+	Route::post('/fieldset/delete', array('as' => 'admin.fieldset.do.delete', 'before' => 'auth', 'uses' => 'FieldsetController@doDelete'));	
+		
+	Route::get('/field/delete/{id}', array('as' => 'admin.field.delete', 'before' => 'auth', 'uses' => 'FieldsetController@deleteField'));	
+	Route::post('/field/delete', array('as' => 'admin.field.do.delete', 'before' => 'auth', 'uses' => 'FieldsetController@doDeleteField'));	
+	Route::post('/field/save', array('as' => 'admin.field.save', 'before' => 'auth', 'uses' => 'FieldsetController@doSaveField'));	
+	Route::get('/field/{fid}/{id?}', array('as' => 'admin.field.edit', 'before' => 'auth', 'uses' => 'FieldsetController@editField'));	
+
+	Route::get('/category/{id?}', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));
+>>>>>>> 629f1521d28a97dba2f25abd5d5bcc572017d6ab
 	Route::get('/category-form/{id?}', array('as' => 'admin.category.form', 'before' => 'auth', 'uses' => 'CategoryController@getForm'));	
 	Route::post('/category', array('as' => 'admin.add-category', 'before' => 'auth', 'uses' => 'CategoryController@save'));	
 	Route::delete('/category', array('as' => 'admin.delete-category', 'before' => 'auth', 'uses' => 'CategoryController@delete'));	
 	Route::post('/get-categories', array('as' => 'admin.get-categories', 'before' => 'auth', 'uses' => 'CategoryController@getCategories'));	
+
+	// Route::get('/category/{id?}', array('as' => 'admin.category', 'before' => 'auth', 'uses' => 'CategoryController@index'));
 });
 
 Route::group(array('prefix' => 'advert'), function() {

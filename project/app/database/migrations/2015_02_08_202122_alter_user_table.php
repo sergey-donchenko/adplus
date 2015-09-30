@@ -24,9 +24,11 @@ class AlterUserTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('users', function(Blueprint $table) {
-			$table->dropColumn('remember_token');
-		});
+		if ( Schema::hasColumn('users', 'remember_token') ) {			
+			Schema::table('users', function(Blueprint $table) {
+				$table->dropColumn('remember_token');
+			});
+		}	
 	}
 
 }
