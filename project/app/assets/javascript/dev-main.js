@@ -32,9 +32,10 @@ require.config({
 
 	paths: {
 		jquery: 'vendors/jquery.min',
+		//bootstrap: 'vendors/bootstrap.min',
 		underscore: 'vendors/underscore-min',
 		backbone: 'vendors/backbone-min',
-		regula: 'vendors/backbone-min',
+		regula: 'vendors/regula-min',
 		frontend: 'frontend'
 		// backboneLocalstorage: '../node_modules/backbone.localstorage/backbone.localStorage',
 		// text: '../node_modules/requirejs-text/text'

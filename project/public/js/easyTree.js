@@ -8,11 +8,11 @@
  */
 
 
-(function ($) {
+(function($) {
 
-    $.fn.easytree = function (options) {
+    $.fn.easytree = function(options) {
         var jQueryContext = this;
-        var easyTree = new EasyTree(jQueryContext, options);        
+        var easyTree = new EasyTree(jQueryContext, options);
 
         return easyTree;
     };
@@ -36,7 +36,7 @@
     // node.tooltip = '';
     // node.uiIcon = '';
 
-    var EasyTree = function (jQueryContext, options) {
+    var EasyTree = function(jQueryContext, options) {
 
         var _settings = {
             allowActivate: true,
@@ -69,7 +69,7 @@
         var _nodes = null;
         var _dnd = new Object(); // initiate internal dnd helper object
 
-        this.init = function (jQueryContext, options) {
+        this.init = function(jQueryContext, options) {
 
             _settings = $.extend(_settings, options);
 
@@ -79,7 +79,7 @@
 
             var json = '';
             if (_settings.dataUrl) {
-                ajaxService(_settings.dataUrl, _settings.dataUrlJson, function (data) {
+                ajaxService(_settings.dataUrl, _settings.dataUrlJson, function(data) {
                     json = convertInputDataToJson(data);
                     if (!json) {
                         alert("EasyTree: Invalid data!");
@@ -88,16 +88,14 @@
                     buildTree(json);
                     return this;
                 });
-            }
-            else if (_settings.data) {
+            } else if (_settings.data) {
                 json = convertInputDataToJson(_settings.data);
                 if (!json) {
                     alert("EasyTree: Invalid data!");
                     return this;
                 }
                 buildTree(json);
-            }
-            else {
+            } else {
                 json = convertInputDataToJson($this.html());
                 if (!json) {
                     alert("EasyTree: Invalid data!");
@@ -111,20 +109,20 @@
 
         //public helpers
         this.options = _settings;
-        this.rebuildTree = function (data) {
+        this.rebuildTree = function(data) {
             var json = data ? convertInputDataToJson(data) : _nodes;
             if (!json) {
                 alert("EasyTree: Invalid data!");
             }
             buildTree(json);
         };
-        this.getAllNodes = function () {
+        this.getAllNodes = function() {
             return _nodes;
         };
-        this.getNode = function (id) {
+        this.getNode = function(id) {
             return getNode(_nodes, id);
         };
-        this.addNode = function (sourceNode, targetId) {
+        this.addNode = function(sourceNode, targetId) {
 
             if (!targetId) { // if blank targetId add to root node
                 _nodes.push(sourceNode);
@@ -143,10 +141,10 @@
 
             targetNode.children.push(sourceNode);
         };
-        this.removeNode = function (id) {
+        this.removeNode = function(id) {
             removeNode(_nodes, id);
         };
-        this.activateNode = function (id) {
+        this.activateNode = function(id) {
             unactivateAll(_nodes);
 
             if (!_settings.allowActivate) {
@@ -154,14 +152,18 @@
             }
 
             var node = getNode(_nodes, id);
-            if (!node) { return; }
+            if (!node) {
+                return;
+            }
 
             node.isActive = true;
             $('#' + node.id).addClass('easytree-active');
         };
-        this.toggleNode = function (id) {
+        this.toggleNode = function(id) {
             var node = getNode(_nodes, id);
-            if (!node) { return; }
+            if (!node) {
+                return;
+            }
 
             toggleNodeBegin(event, _nodes, node);
         };
@@ -171,7 +173,9 @@
             var id = getElementId(this);
             var nodes = event.data;
             var node = getNode(nodes, id);
-            if (!node) { return; }
+            if (!node) {
+                return;
+            }
 
             unactivateAll(nodes);
 
@@ -187,11 +191,14 @@
                 _settings.stateChanged(nodes, j);
             }
         }
+
         function toggleNodeEvt(event) {
             var id = getElementId(this);
             var nodes = event.data;
             var node = getNode(nodes, id);
-            if (!node) { return; }
+            if (!node) {
+                return;
+            }
 
             toggleNodeBegin(event, nodes, node);
         }
@@ -212,8 +219,7 @@
                         return false;
                     }
                 }
-            }
-            else { // if opening node
+            } else { // if opening node
                 if (_settings.opening) { // fire opening event
                     ret = _settings.opening(event, nodes, node);
                     if (ret === false) {
@@ -229,19 +235,18 @@
                     ret = _settings.openLazyNode(event, nodes, node, hasChildren);
                 }
                 if (node.lazyUrl && ret !== false) {
-                    ajaxService(node.lazyUrl, node.lazyUrlJson, function (data) {                        
+                    ajaxService(node.lazyUrl, node.lazyUrlJson, function(data) {
 
                         if (data.d) {
                             data = data.d;
-                        } else if (data.data){
+                        } else if (data.data) {
                             data = data.data;
                         }
 
                         var json = convertInputDataToJson(data);
                         if ($.isArray(json)) {
                             node.children = json;
-                        }
-                        else {
+                        } else {
                             node.children = [];
                             node.children.push(json);
                         }
@@ -256,6 +261,7 @@
 
             toggleNodeEnd(event, nodes, node);
         }
+
         function toggleNodeEnd(event, nodes, node) {
             if (node.isExpanded) { // if closing node
                 openCloseNode(nodes, node.id, "close");
@@ -264,8 +270,7 @@
                 if (_settings.closed) { // fire closed event
                     _settings.closed(event, nodes, node);
                 }
-            }
-            else { // if opening node
+            } else { // if opening node
                 openCloseNode(nodes, node.id, "open");
                 renderNode(node, "open");
 
@@ -281,7 +286,9 @@
 
         // dnd
         function dragStart(event) {
-            if (!_settings.enableDnd) { return; }
+            if (!_settings.enableDnd) {
+                return;
+            }
 
             var el = event.target;
             while (el) {
@@ -291,7 +298,9 @@
                 el = el.parentElement;
             }
 
-            if (!el) { return; } // not draggable, no 'easytree-draggable' class found
+            if (!el) {
+                return;
+            } // not draggable, no 'easytree-draggable' class found
 
             unsourceAll(_nodes);
             unactivateAll(_nodes);
@@ -306,9 +315,14 @@
 
             return false;
         }
+
         function drag(event) {
-            if (!_dnd.dragok) { return; }
-            if (!_settings.enableDnd) { return; }
+            if (!_dnd.dragok) {
+                return;
+            }
+            if (!_settings.enableDnd) {
+                return;
+            }
 
             if (_dnd.createClone) {
                 if (!_dnd.clone) {
@@ -366,13 +380,12 @@
                 if (ret === true) { // user forces accept
                     showAcceptDragHelper();
                     _dnd.canDrop = true;
-                    _dnd.openDelayTimeout = window.setTimeout(function () {
+                    _dnd.openDelayTimeout = window.setTimeout(function() {
                         openCloseNode(_nodes, _dnd.targetId, 'open');
                         renderNode(_dnd.targetNode, 'open');
                     }, 600);
                     return;
-                }
-                else if (ret === false) { // user forces reject
+                } else if (ret === false) { // user forces reject
                     showRejectDragHelper();
                     return;
                 }
@@ -380,21 +393,20 @@
 
             if ($target.hasClass('easytree-reject')) {
                 showRejectDragHelper();
-            }
-            else if ($target.hasClass('easytree-accept')) {
+            } else if ($target.hasClass('easytree-accept')) {
                 showAcceptDragHelper();
                 _dnd.canDrop = true;
-                _dnd.openDelayTimeout = window.setTimeout(function () {
+                _dnd.openDelayTimeout = window.setTimeout(function() {
                     openCloseNode(_nodes, _dnd.targetId, 'open');
                     renderNode(_dnd.targetNode, 'open');
                 }, 600);
-            }
-            else {
+            } else {
                 hideDragHelpers();
             }
 
             return false;
         }
+
         function dragEnd(event) {
             // define variables to send in events
             var isSourceNode = _dnd.sourceNode != null;
@@ -418,7 +430,7 @@
                     resetDnd(_dnd);
                     return;
                 }
-            }            
+            }
 
             if (_dnd.targetNode && _dnd.sourceNode && canDrop) { // internal drop
                 if (!_dnd.targetNode.children) {
@@ -440,6 +452,7 @@
 
             return false;
         }
+
         function createClone(sourceEl) {
             $(sourceEl).remove(".easytree-expander");
             var clone = $(sourceEl).clone().remove(".easytree-expander").removeClass('easytree-drag-source')[0];
@@ -455,6 +468,7 @@
 
             return clone;
         }
+
         function getDroppableTargetEl(clientX, clientY) {
             var targetEl = document.elementFromPoint(clientX, clientY);
 
@@ -467,6 +481,7 @@
 
             return null;
         }
+
         function resetDnd(dnd) {
             dnd.canDrop = false;
             dnd.createClone = true;
@@ -491,6 +506,7 @@
             }
             return null;
         }
+
         function getNode(nodes, id) {
             var i = 0;
             for (i = 0; i < nodes.length; i++) {
@@ -510,6 +526,7 @@
 
             return null;
         }
+
         function isAncester(node, id) {
             var i = 0;
             if (!node || !node.children || node.children.length == 0) {
@@ -524,7 +541,7 @@
                 var hasChildren = n.children && n.children.length > 0;
                 if (hasChildren) {
                     var ancester = isAncester(n, id);
-                    if (ancester) {  // if true
+                    if (ancester) { // if true
                         return ancester;
                     }
                 }
@@ -532,6 +549,7 @@
 
             return false;
         }
+
         function removeNode(nodes, id) {
             var i = 0;
             for (i = 0; i < nodes.length; i++) {
@@ -547,6 +565,7 @@
                 }
             }
         }
+
         function openCloseNode(nodes, id, openOrClose) {
             var i = 0;
             for (i = 0; i < nodes.length; i++) {
@@ -562,6 +581,7 @@
                 }
             }
         }
+
         function unactivateAll(nodes) {
             var i = 0;
             for (i = 0; i < nodes.length; i++) {
@@ -574,6 +594,7 @@
                 }
             }
         }
+
         function unsourceAll(nodes) {
             var i = 0;
             for (i = 0; i < nodes.length; i++) {
@@ -585,14 +606,19 @@
                 }
             }
         }
+
         function sort(nodes) {
             var i = 0;
 
-            nodes = nodes.sort(function (n1, n2) {
+            nodes = nodes.sort(function(n1, n2) {
                 var n1Text = n1.text.toLowerCase();
                 var n2Text = n2.text.toLowerCase();
-                if (!n1Text) { n1Text = "a"; } // take into account empty text, so it is below folders
-                if (!n2Text) { n2Text = "a"; }
+                if (!n1Text) {
+                    n1Text = "a";
+                } // take into account empty text, so it is below folders
+                if (!n2Text) {
+                    n2Text = "a";
+                }
 
                 if (_settings.ordering.toLowerCase().indexOf('folder') > -1 && n1.isFolder) {
                     n1Text = "______" + n1Text;
@@ -607,7 +633,7 @@
                 if (n1Text > n2Text) {
                     return 1 * reverse;
                 }
-                return 0;//default return value (no sorting)
+                return 0; //default return value (no sorting)
             });
 
             for (i = 0; i < nodes.length; i++) {
@@ -620,6 +646,7 @@
 
             return nodes;
         }
+
         function giveUniqueIds(nodes, level, id) {
             var i = 0;
             if (!level) {
@@ -641,7 +668,9 @@
 
         // rendering
         function buildTree(nodes) {
-            if (!nodes) { return; }
+            if (!nodes) {
+                return;
+            }
 
             var s1 = new Date();
 
@@ -714,6 +743,7 @@
             var t9 = s10 - s9;
             var total = s10 - s1;
         }
+
         function getNodesAsHtml(nodes, level, display) {
             var html = '';
             var i = 0;
@@ -758,6 +788,7 @@
 
             return html;
         }
+
         function getSpanCss(node, lastSibling) {
             var hasChildren = node.children && node.children.length > 0;
             var spanCss = "easytree-node ";
@@ -769,8 +800,7 @@
             }
             if (node.isFolder && _settings.enableDnd) {
                 spanCss += " easytree-droppable easytree-accept ";
-            }
-            else if (_settings.enableDnd) {
+            } else if (_settings.enableDnd) {
                 spanCss += " easytree-droppable easytree-reject ";
             }
 
@@ -788,19 +818,17 @@
 
             return spanCss;
         }
+
         function getExpCss(node, lastSibling) {
             var hasChildren = node.children && node.children.length > 0;
             var exp = "";
             if (!hasChildren && node.isLazy) {
                 exp = "c";
-            }
-            else if (!hasChildren) {
+            } else if (!hasChildren) {
                 exp = "n";
-            }
-            else if (node.isExpanded) {
+            } else if (node.isExpanded) {
                 exp = "e";
-            }
-            else {
+            } else {
                 exp = "c";
             }
             //exp = !hasChildren ? "n" : node.isExpanded ? "e" : "c";
@@ -810,6 +838,7 @@
 
             return " easytree-exp-" + exp;
         }
+
         function getIconHtml(node) {
             var html = '';
             if (_settings.disableIcons) {
@@ -824,6 +853,7 @@
 
             return '<span class="easytree-icon"></span>';
         }
+
         function getTitleHtml(node) {
             var html = '';
             var tooltip = node.tooltip ? 'title="' + node.tooltip + '"' : "";
@@ -850,8 +880,11 @@
 
             return html;
         }
+
         function renderNode(node, openOrClose) {
-            if (!node) { return; }
+            if (!node) {
+                return;
+            }
             var classes = $('#' + node.id).attr('class');
 
             var expClassStart = classes.indexOf('easytree-exp-');
@@ -868,8 +901,7 @@
             var slideTime = parseInt(_settings.slidingTime, 10);
             if (openOrClose == "close") {
                 childUl.slideUp(slideTime);
-            }
-            else {
+            } else {
                 childUl.slideDown(slideTime);
             }
         }
@@ -879,15 +911,18 @@
             $("#easytree-reject").hide();
             $("#easytree-accept").hide();
         }
+
         function showAcceptDragHelper() {
             $("#easytree-accept").show();
             $("#easytree-reject").hide();
 
         }
+
         function showRejectDragHelper() {
             $("#easytree-reject").show();
             $("#easytree-accept").hide();
         }
+
         function getMinifiedJson(nodes) { // to increase the chance it can be stored in a 4kb cookie
             var j = JSON.stringify ? JSON.stringify(nodes) : 'Please import json2.js'; // for IE6/7 please import json2.js
             while (j.indexOf(',"children":[]') > -1) {
@@ -919,7 +954,7 @@
         function init() {
             initDragHelpers();
             resetDnd(_dnd);
-            $(document).on("mousemove", function (event) {
+            $(document).on("mousemove", function(event) {
                 var top = event.pageY;
                 var left = event.pageX;
 
@@ -929,6 +964,7 @@
                 document.getElementById('easytree-accept').style.left = (left + 17) + 'px';
             });
         }
+
         function initDragHelpers() {
             if (!$("#easytree-reject").length) {
                 var dragRejectHtml = '<div id="easytree-reject" class="easytree-drag-helper easytree-drop-reject">';
@@ -945,6 +981,7 @@
                 $('body').append(dragAcceptHtml);
             }
         }
+
         function ajaxService(actionUrl, json, callBack) {
             $.ajax({
                 url: actionUrl,
@@ -952,39 +989,40 @@
                 contentType: "application/json; charset=utf-8",
                 data: json,
                 success: callBack,
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     alert("Error: " + jqXHR.responseText);
                 }
             });
         }
+
         function convertInputDataToJson(data) {
             var json = null;
             if (typeof data == 'object') {
                 json = data;
-            }
-            else if (typeof data == 'string') {
+            } else if (typeof data == 'string') {
                 data = $.trim(data);
                 if (data.indexOf('[') == 0 || data.indexOf('{') == 0) // assume json
                 {
                     json = $.parseJSON(data);
-                }
-                else {
+                } else {
                     json = convertHtmlToJson(data); // parse html in json object
                 }
             }
 
             return json;
         }
+
         function convertHtmlToJson(html) {
             var i = 0;
             var $html = $(html);
             var nodes = [];
-            var children = $html.children().each(function (index) {
+            var children = $html.children().each(function(index) {
                 nodes.push(convertHtmlToNode(this));
             });
 
             return nodes;
         }
+
         function convertHtmlToNode(element) {
             var $el = $(element);
             var node = {};
@@ -1028,16 +1066,17 @@
                 node.textCss += $span.attr('class') + ' ';
             }
 
-            node.text = getNodeValue($el[0]);//$.trim($el.first().text());
+            node.text = getNodeValue($el[0]); //$.trim($el.first().text());
             node.tooltip = $el.attr('title');
 
             node.children = [];
-            var $li = $el.children('ul').children('li').each(function (index) {
+            var $li = $el.children('ul').children('li').each(function(index) {
                 node.children.push(convertHtmlToNode(this));
             });
 
             return node;
         }
+
         function getNodeValue(el) {
             var i = 0;
             for (i = 0; i < el.childNodes.length; i++) {

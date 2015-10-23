@@ -53,9 +53,9 @@ module.exports = function(grunt) {
 
             dist: {
                 src: [
-                    './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
-                    './app/assets/javascript/components/Application.js', // Init the application
-                    './app/assets/javascript/components/**/*.js',
+                    // './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+                    // './app/assets/javascript/components/Application.js', // Init the application
+                    // './app/assets/javascript/components/**/*.js',
                     './app/assets/javascript/frontend.js'
                 ],
                 dest: './public/js/frontend.js',
@@ -103,7 +103,12 @@ module.exports = function(grunt) {
                     dest: './public/js/jquery'
 			    }, 
 
-			    {
+                {
+                    expand: true,
+                    cwd: './bower_components/bootstrap/dist/js/',
+                    src: ['bootstrap-min.js'],
+                    dest: './public/js/vendors'
+                }, {
 			        expand: true,
 			        cwd: './node_modules/backbone/',
 			        src: ['backbone-min.js'],
@@ -141,8 +146,8 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: './bower_components/regula/dist/',
                     src: ['regula-1.3.4.min.js'],
-                    dest: './public/js/'
-                }, {
+                    dest: './public/js/',
+                    rename: function(dest, src) {
 				        return dest + src.replace('-1.3.4', '');
 				    }
 			    },
@@ -206,7 +211,7 @@ module.exports = function(grunt) {
                     compass: true
                 },
                 files: {
-                    './public/css/styles.min.css': './app/assets/stylesheets/frontend.scss',
+                    './public/css/styles.css': './app/assets/stylesheets/frontend.scss',
                 }
             }
         },
@@ -228,8 +233,8 @@ module.exports = function(grunt) {
                 files: {
                     './public/js/frontend.js': [
                         './public/js/frontend.js',
-                        './public/js/easyTree.js',
-                        './public/js/admin.js',
+                        //'./public/js/easyTree.js',
+                        //'./public/js/admin.js',
                         './app/assets/javascript/build/es5/app.js'
                     ]
                 }
@@ -287,7 +292,7 @@ module.exports = function(grunt) {
 
             js: {
                 files: './app/assets/javascript/modules/*.js',
-                tasks: ['browserify', 'transpile', 'uglify']
+                tasks: ['browserify', 'transpile', 'uglify'],
         		options: {
 		            livereload: true                        //reloads the browser
 		        }
@@ -307,15 +312,10 @@ module.exports = function(grunt) {
 
         // REMOVE FILES
         clean: {
-            css: ['./public/css/*.css', '!./public/css/*.min.css']
-        		js: ['./public/js/modules/*.js']
-        	},
-
-        	dist: {
-        }
-		}
-
-    });
+            css: ['./public/css/*.css', '!./public/css/*.min.css'],
+        	js: ['./public/js/modules/*.js']
+        }       	
+	});
 
     // Plugin loading 	
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);

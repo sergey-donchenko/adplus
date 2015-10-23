@@ -14,6 +14,7 @@ define([
 		*/
 		getDefaultPage: function (param) {
 			console.log('Handle the default PAge!!!!');
+			alert('Hello dear!!!');
 		}
 	});
 
