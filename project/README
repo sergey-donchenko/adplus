@@ -34,7 +34,17 @@
    4.2: Country List: https://github.com/Monarobase/country-list
 
 
-5. Install Imagick
+5. Optimizer
+The optimizer can be run by passing the -o command to r.js:
+
+r.js -o public/js/app.build.js
+
+EXAPLE: https://github.com/jrburke/r.js/blob/master/build/example.build.js
+
+
+
+
+6. Install Imagick
 	
 For all to those having problems with this i did this tutorial:
 How to install Imagemagick and Php module Imagick on ubuntu?

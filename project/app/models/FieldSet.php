@@ -12,6 +12,15 @@ class FieldSet extends Eloquent {
 
 	protected $primaryKey = 'id';
 
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	*/
+	public static $aRules = array(
+		'fieldset_name' => 'required|min:3'
+	);	
+
 	protected $guarded = array();
 
 	/**
