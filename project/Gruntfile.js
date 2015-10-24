@@ -21,10 +21,13 @@ module.exports = function(grunt) {
         browserify: {
             dist: {
                 files: [{
-                    './app/assets/build/app.js': ['./app/assets/javascripts/*.js']
+                    './app/assets/build/app.js': [
+                        './app/assets/javascript/modules/*.js',
+                        './app/assets/javascript/*.js'
+                    ]
                 }],
                 options: {
-                    transform: ['coffeeify']
+                    transform: ['babelify', 'coffeeify']
                 }
             }
         },
@@ -46,17 +49,17 @@ module.exports = function(grunt) {
                 separator: ';',
             },
 
-            dev: {
-                src: ['./app/assets/javascript/frontend.js'],
-                dest: './public/js/frontend.js',
-            },
+            // dev: {
+            //     src: ['./app/assets/build/es5/app.js'],
+            //     dest: './public/js/frontend.js',
+            // },
 
             dist: {
                 src: [
-                    './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
-                    './app/assets/javascript/components/Application.js', // Init the application
-                    './app/assets/javascript/components/**/*.js',
-                    './app/assets/javascript/frontend.js'
+                    //'./bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+                    // './app/assets/javascript/components/Application.js', // Init the application
+                    // './app/assets/javascript/components/**/*.js',
+                    './app/assets/build/es5/app.js'
                 ],
                 dest: './public/js/frontend.js',
             },
@@ -65,74 +68,81 @@ module.exports = function(grunt) {
         copy: {
             dist: {
                 files: [{
-                    expand: true,
-                    cwd: './bower_components/fontawesome/fonts',
-                    src: ['**'],
-                    dest: './public/fonts/'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/bootstrap-sass-official/assets/fonts/bootstrap/',
-                    src: ['**'],
-                    dest: './public/fonts/bootstrap/'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/bootstrap-sass-official/assets/images/',
-                    src: ['**'],
-                    dest: './public/images/'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/flot/',
-                    src: ['jquery.flot.js'],
-                    dest: './public/js/jquery'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/jquery/dist/',
-                    src: ['jquery.min.js'],
-                    dest: './public/js/jquery'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/jquery/dist/',
-                    src: ['jquery.min.map'],
-                    dest: './public/js/jquery'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/regula/dist/',
-                    src: ['regula-1.3.4.min.js'],
-                    dest: './public/js/'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/dropzone/downloads/',
-                    src: ['dropzone.min.js'],
-                    dest: './public/js/'
-                }, {
-                    expand: true,
-                    cwd: './bower_components/dropzone/downloads/css/',
-                    src: ['dropzone.css'],
-                    dest: './public/css/'
-                }, {
-                    expand: true,
-                    cwd: './app/assets/javascript/',
-                    src: ['easyTree.js'],
-                    dest: './public/js/'
-                }, {
-                    expand: true,
-                    cwd: './app/assets/javascript/',
-                    src: ['admin.js'],
-                    dest: './public/js/'
-                }, {
-                    expand: true,
-                    cwd: './app/assets/stylesheets/',
-                    src: ['ui.easytree.css'],
-                    dest: './public/css/',
-                    rename: function(dest) {
-                        return dest + 'ui-easytree.css';
+                        expand: true,
+                        cwd: './bower_components/fontawesome/fonts',
+                        src: ['**'],
+                        dest: './public/fonts/'
+                    }, {
+                        expand: true,
+                        cwd: './bower_components/bootstrap-sass-official/assets/fonts/bootstrap/',
+                        src: ['**'],
+                        dest: './public/fonts/bootstrap/'
+                    }, {
+                        expand: true,
+                        cwd: './bower_components/bootstrap-sass-official/assets/images/',
+                        src: ['**'],
+                        dest: './public/images/'
+                    }, {
+                        expand: true,
+                        cwd: './bower_components/flot/',
+                        src: ['jquery.flot.js'],
+                        dest: './public/js/jquery'
+                    }, {
+                        expand: true,
+                        cwd: './bower_components/jquery/dist/',
+                        src: ['jquery.min.js'],
+                        dest: './public/js/jquery'
+                    },
+
+                    // {
+                    //     expand: true,
+                    //     cwd: './bower_components/jquery/dist/',
+                    //     src: ['jquery.min.map'],
+                    //     dest: './public/js/jquery'
+                    // }, 
+
+                    {
+                        expand: true,
+                        cwd: './bower_components/regula/dist/',
+                        src: ['regula-1.3.4.min.js'],
+                        dest: './public/js/'
+                    }, {
+                        expand: true,
+                        cwd: './bower_components/dropzone/downloads/',
+                        src: ['dropzone.min.js'],
+                        dest: './public/js/'
+                    }, {
+                        expand: true,
+                        cwd: './bower_components/dropzone/downloads/css/',
+                        src: ['dropzone.css'],
+                        dest: './public/css/'
+                    }, {
+                        expand: true,
+                        cwd: './app/assets/javascript/',
+                        src: ['easyTree.js'],
+                        dest: './public/js/'
+                    },
+                    // {
+                    //     expand: true,
+                    //     cwd: './app/assets/javascript/',
+                    //     src: ['admin.js'],
+                    //     dest: './public/js/'
+                    // }, 
+                    {
+                        expand: true,
+                        cwd: './app/assets/stylesheets/',
+                        src: ['ui.easytree.css'],
+                        dest: './public/css/',
+                        rename: function(dest) {
+                            return dest + 'ui-easytree.css';
+                        }
+                    }, {
+                        expand: true,
+                        cwd: './app/assets/stylesheets/skin-win8/',
+                        src: ['**'],
+                        dest: './public/images/tree-icons/'
                     }
-                }, {
-                    expand: true,
-                    cwd: './app/assets/stylesheets/skin-win8/',
-                    src: ['**'],
-                    dest: './public/images/tree-icons/'
-                }]
+                ]
             }
         },
 
@@ -164,9 +174,9 @@ module.exports = function(grunt) {
                 files: {
                     './public/js/frontend.js': [
                         './public/js/frontend.js',
-                        './public/js/easyTree.js',
-                        './public/js/admin.js',
-                        './app/assets/javascript/build/es5/app.js'
+                        // './public/js/easyTree.js',
+                        // './public/js/admin.js',
+                        //'./app/assets/build/es5/app.js'
                     ]
                 }
             }
@@ -201,11 +211,11 @@ module.exports = function(grunt) {
             frontend: {
                 files: [
                     //watched files
-                    './bower_components/jquery/dist/jquery.js',
+                    // './bower_components/jquery/dist/jquery.js',
                     './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
                     './app/assets/javascript/components/*.js',
-                    './app/assets/javascript/frontend.js',
-                    './app/assets/javascript/admin.js',
+                    // './app/assets/javascript/frontend.js',
+                    // './app/assets/javascript/admin.js',
                 ],
                 tasks: ['concat:dist', 'copy', 'uglify:dist'], //tasks to run
                 options: {
@@ -222,8 +232,11 @@ module.exports = function(grunt) {
             },
 
             js: {
-                files: './app/assets/javascript/modules/*.js',
-                tasks: ['browserify', 'transpile', 'uglify']
+                files: [
+                    './app/assets/javascript/*.js',
+                    './app/assets/javascript/modules/*.js'
+                ],
+                tasks: ['browserify', 'transpile', 'concat', 'uglify']
             },
 
             tests: {
